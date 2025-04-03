@@ -29,8 +29,6 @@ export default async function MotorcyclePage({ params }: Props) {
         notFound();
     }
 
-    console.log(motorcycle);
-
     const reviews: ReviewResponse[] = motorcycle.reviews;
 
     const similarBikes: SimilarBike[] = motorcycle.similarMotorcycles;

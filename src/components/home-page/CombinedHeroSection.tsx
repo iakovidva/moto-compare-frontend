@@ -6,9 +6,8 @@ export default function CombinedHeroSection() {
             {/* Compare Hero - Left Column */}
             <div
                 className="relative w-full lg:w-1/2 h-[40vh] md:h-[50vh] bg-cover bg-center flex items-center justify-center"
-                style={{ backgroundImage: "url('/images/compare-hero.jpg')" }}
             >
-                <div className="absolute inset-0 bg-black opacity-60"></div>
+                <div className="absolute inset-0 bg-black opacity-90"></div>
                 <div className="relative z-10 text-center px-4">
                     <h2 className="text-3xl md:text-4xl font-bold text-white">
                         Compare Your Favorite Motorcycles
@@ -27,9 +26,8 @@ export default function CombinedHeroSection() {
             {/* Browse Hero - Right Column */}
             <div
                 className="relative w-full lg:w-1/2 h-[40vh] md:h-[50vh] bg-cover bg-center flex items-center justify-center"
-                style={{ backgroundImage: "url('/images/browse-hero.jpg')" }}
             >
-                <div className="absolute inset-0 bg-black opacity-60"></div>
+                <div className="absolute inset-0 bg-black opacity-80"></div>
                 <div className="relative z-10 text-center px-4">
                     <h2 className="text-3xl md:text-4xl font-bold text-white">
                         Browse All Motorcycles

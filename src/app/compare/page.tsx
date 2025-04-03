@@ -3,7 +3,8 @@ import { fetchAllMotorcyclesSummary } from "@/lib/MotorcycleApi";
 import { MotorcycleSummary } from "@/models/MotorcycleSummary";
 
 export default async function ComparePage() {
-    const motorcycles: MotorcycleSummary[] = await fetchAllMotorcyclesSummary();
+    const response = await fetchAllMotorcyclesSummary({});
+    const motorcycles = response.motorcycles;
 
     return (
         <div className="flex justify-center py-10">

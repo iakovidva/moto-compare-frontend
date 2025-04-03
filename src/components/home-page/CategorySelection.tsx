@@ -2,10 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 const categories = [
-    { id: "adventure", name: "Adventure", image: "/images/motorcycles/ktm-790-adventure.jpg" },
-    { id: "cruiser", name: "Cruiser", image: "/images/motorcycles/ktm-790-adventure.jpg" },
-    { id: "sport", name: "Sport", image: "/images/motorcycles/ktm-790-adventure.jpg" },
-    { id: "naked", name: "Naked", image: "/images/motorcycles/ktm-790-adventure.jpg" },
+    { id: "ADVENTURE", name: "Adventure", image: "/images/motorcycles/ktm-790-adventure.jpg" },
+    { id: "CRUISER", name: "Cruiser", image: "/images/motorcycles/ktm-790-adventure.jpg" },
+    { id: "SPORT_TURING", name: "Sport Turing", image: "/images/motorcycles/ktm-790-adventure.jpg" },
+    { id: "NAKED", name: "Naked", image: "/images/motorcycles/ktm-790-adventure.jpg" },
 ];
 
 export default function CategorySelection() {
@@ -15,7 +15,7 @@ export default function CategorySelection() {
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 {categories.map((category) => (
-                    <Link key={category.id} href={`/categories/${category.id}`} className="group">
+                    <Link key={category.id} href={`/motorcycles?category=${category.id}`} className="group">
                         <div className="relative w-full h-40 md:h-48 bg-gray-200 rounded-lg overflow-hidden shadow-md transition transform group-hover:scale-105">
                             <Image
                                 fill

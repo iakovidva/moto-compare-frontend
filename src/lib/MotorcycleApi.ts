@@ -9,35 +9,70 @@ import { z } from "zod";
 
 const API_BASE_URL = "http://localhost:8080/api";
 
-export async function fetchAllMotorcyclesSummary() : Promise<MotorcycleSummary[]> {
-    try {
-        const response = await fetch(`${API_BASE_URL}/motorcycles`, 
-            {method: "GET",
-                headers: {
-                    "Content-Type" : "application/json"
-                },
-                next: {revalidate: 1},
-            });
+type FetchProps = {
+    page?: number;
+    size?: number;
+    manufacturer?: string;
+    category?: string;
+    search?: string;
+    horsePowerMin?: number;
+    horsePowerMax?: number;
+    displacementMin?: number;
+    displacementMax?: number;
+  }
 
-        if (!response.ok) {
-            throw new Error('Failed to fetch!');
-        }
-        const data =  await response.json();
-        return data.map((moto: MotorcycleSummary) => ({
-            id: String(moto.id), // Convert Long to string for consistency
-            manufacturer: moto.manufacturer,
-            model: moto.model,
-            yearRange: moto.yearRange, 
-            image: moto.image,
-            category: moto.category,
-            displacement: moto.displacement,
-            horsePower: moto.horsePower
-        }));
+export async function fetchAllMotorcyclesSummary({
+    page = 0,
+    size = 12,
+    manufacturer,
+    category,
+    search,
+    horsePowerMin,
+    horsePowerMax,
+    displacementMin,
+    displacementMax
+//   }: FetchProps): Promise<MotorcycleSummary[]> {
+  }: FetchProps): Promise<{motorcycles : MotorcycleSummary[], totalPages: number}> {
+    try {
+      const params = new URLSearchParams({
+        page: page.toString(),
+        size: size.toString(),
+      });
+  
+      if (manufacturer) params.append("manufacturer", manufacturer);
+      if (category) params.append("category", category);
+      if (search) params.append("search", search);
+      if (horsePowerMin) params.append("horsePowerMin", String(horsePowerMin));
+      if (horsePowerMax) params.append("horsePowerMax", String(horsePowerMax));
+      if (displacementMin) params.append("displacementMin", String(displacementMin));
+      if (displacementMax) params.append("displacementMax", String(displacementMax));
+  
+      const url = `${API_BASE_URL}/motorcycles?${params.toString()}`;
+      console.log("🚀 Fetching data from:", url);
+  
+      const response = await fetch(url, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to fetch motorcycles!");
+      }
+  
+      const data = await response.json();
+      
+    return {
+        motorcycles: data.content,
+        totalPages: Number(response.headers.get("X-Total-Pages"))
+    };
     } catch (error) {
-        console.error("Error fetching motorcycles", error);
-        return [];
+      console.error("❌ Error fetching motorcycles:", error);
+    return {
+        motorcycles: [],
+        totalPages: 0
     }
-}
+    }
+  }
 
 export async function fetchMotorcycleDetails(motorcycleId: string) : Promise<MotorcycleDetailsModel | null> {
     try {

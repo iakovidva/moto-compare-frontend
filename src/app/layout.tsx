@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import MainNavigation from "@/components/main-header/MainNavigation";
+import { QueryProvider } from "@/components/providers/QueryProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,7 +20,9 @@ export default function RootLayout({
       </head>
       <body className="bg-background-color">
         <MainNavigation />
-        {children}
+        <QueryProvider> {/* ✅ Wrap children in QueryProvider */}
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );

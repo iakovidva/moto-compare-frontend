@@ -20,7 +20,7 @@ export default function CreateMotorcyclePage() {
     } = useForm<FormSchema>({
         resolver: zodResolver(motorcycleSchema),
         defaultValues: {
-            // image: 'https://example.com/default-image.jpg',
+            image: '/images/motorcycles/default.avif',
         }
     });
 
