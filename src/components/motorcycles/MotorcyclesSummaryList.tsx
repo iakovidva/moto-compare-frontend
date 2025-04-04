@@ -1,14 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import MotorcycleCard from "@/components/motorcycles/MotorcycleCard";
 import { motion } from "framer-motion";
 import { MotorcycleSummary } from "@/models/MotorcycleSummary";
 import { fetchAllMotorcyclesSummary } from "@/lib/MotorcycleApi";
 import { useMotorcycleFilters } from "@/hooks/useMotorcyclesFilter";
 import FiltersPanel from "./FiltersPanel";
-import RangeDropdown from "./RangeDropdown";
-import MobileFiltersModal from "./MobileFiltersModal";
 import { useQuery } from "@tanstack/react-query";
 import { usePagination } from "@/hooks/usePagination";
 import PaginationControls from "./pagination/PaginationControls";
@@ -16,14 +13,8 @@ import PaginationControls from "./pagination/PaginationControls";
 interface Props {
     motorcycles: MotorcycleSummary[];
 }
-const PAGE_SIZES = [6, 12, 24, 48];
-
 
 const MotorcyclesSummaryList: React.FC<Props> = ({ motorcycles }) => {
-
-    // const { page, pageSize, category, manufacturer, horsePowerMin, horsePowerMax, displacementMin, displacementMax,
-    //     setFilters, setPage, setPageSize
-    // } = useMotorcycleFilters();
 
     const { category, manufacturer, horsePowerMin, horsePowerMax, displacementMin, displacementMax,
         setFilters
@@ -46,33 +37,15 @@ const MotorcyclesSummaryList: React.FC<Props> = ({ motorcycles }) => {
 
     return (
         <div>
-            <div className="hidden md:block">
-                <RangeDropdown
-                    label="Horsepower"
-                    unit="HP"
-                    min={horsePowerMin}
-                    max={horsePowerMax}
-                    values={generateRange(5, 300, 20)}
-                    minKey="horsePowerMin"
-                    maxKey="horsePowerMax"
-                    onChange={setFilters}
-                />
-                <RangeDropdown
-                    label="Displacement"
-                    unit="cc"
-                    min={displacementMin}
-                    max={displacementMax}
-                    values={generateRange(50, 1500, 50)}
-                    minKey="displacementMin"
-                    maxKey="displacementMax"
-                    onChange={setFilters}
-                />
-            </div>
-            <div className="hidden md:block">
-
-                <FiltersPanel />
-            </div>
-            <MobileFiltersModal />
+            <FiltersPanel
+                category={category}
+                manufacturer={manufacturer}
+                horsePowerMin={horsePowerMin}
+                horsePowerMax={horsePowerMax}
+                displacementMin={displacementMin}
+                displacementMax={displacementMax}
+                setFilters={setFilters}
+            />
 
             <div className="max-w-7xl mx-auto px-4">
                 {/* <SortDropdown selectedSort={sort} onSortChange={setSort} /> */}
@@ -104,10 +77,3 @@ const MotorcyclesSummaryList: React.FC<Props> = ({ motorcycles }) => {
 
 export default MotorcyclesSummaryList;
 
-export const generateRange = (min: number, max: number, step: number) => {
-    const result: number[] = [];
-    for (let i = min; i <= max; i += step) {
-        result.push(i);
-    }
-    return result;
-}
