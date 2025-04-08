@@ -9,14 +9,13 @@ export function useMotorcycleFilters() {
   const router = useRouter();
 
   const filters: MotorcycleFilters = {
-    // page: Number(searchParams.get("page")) || 1,
-    // pageSize: Number(searchParams.get("pageSize")) || 12,
     category: searchParams.get("category") || undefined,
     manufacturer: searchParams.get("manufacturer") || undefined,
     horsePowerMin: Number(searchParams.get("horsePowerMin")) || undefined,
     horsePowerMax: Number(searchParams.get("horsePowerMax")) || undefined,
     displacementMin: Number(searchParams.get("displacementMin")) || undefined,
-    displacementMax: Number(searchParams.get("displacementMax")) || undefined
+    displacementMax: Number(searchParams.get("displacementMax")) || undefined,
+    sort: searchParams.get("sort") || undefined,
   };
 
   // TODO: CONSIDER ADDING SORTING OF FILTERS AND SHORTEN NAMES HERE !!!
@@ -50,31 +49,5 @@ export function useMotorcycleFilters() {
     }
   }, [searchParams, router]);
   
-  // const setPage = (newPage: number) => {
-  //   const params = new URLSearchParams(searchParams.toString());
-  
-  //   if (newPage === 1) {
-  //     params.delete("page");
-  //   } else {
-  //     params.set("page", newPage.toString());
-  //   }
-  
-  //   router.push(`?${params.toString()}`, { scroll: false });
-  // };
-
-  // const setPageSize = (newSize: number) => {
-  //   const params = new URLSearchParams(searchParams.toString());
-  
-  //   if (newSize === 12) {
-  //     params.delete("pageSize");
-  //   } else {
-  //     params.set("pageSize", newSize.toString());
-  //   }
-  
-  //   params.delete("page");
-  //   router.push(`?${params.toString()}`, { scroll: false });
-  // };
-
-  // return { ...filters, setFilters, setPage, setPageSize };
   return {...filters, setFilters}
 }

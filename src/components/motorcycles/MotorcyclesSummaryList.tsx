@@ -9,6 +9,8 @@ import FiltersPanel from "./FiltersPanel";
 import { useQuery } from "@tanstack/react-query";
 import { usePagination } from "@/hooks/usePagination";
 import PaginationControls from "./pagination/PaginationControls";
+import { useState } from "react";
+import SortDropdown from "./SortDropdown";
 
 interface Props {
     motorcycles: MotorcycleSummary[];
@@ -16,16 +18,17 @@ interface Props {
 
 const MotorcyclesSummaryList: React.FC<Props> = ({ motorcycles }) => {
 
-    const { category, manufacturer, horsePowerMin, horsePowerMax, displacementMin, displacementMax,
+    const { category, manufacturer, horsePowerMin, horsePowerMax, displacementMin, displacementMax, sort,
         setFilters
     } = useMotorcycleFilters();
 
     const { page, pageSize, setPage, setPageSize } = usePagination(); // ✅ Separate pagination logic
+    const [showPagination, setShowPagination] = useState<boolean>(true); // insead of that I could make the model to be above everything and block everything in the background.
 
 
     const { status, error, data } = useQuery({
-        queryKey: ["motorcycles", page, pageSize, category, manufacturer, horsePowerMin, horsePowerMax, displacementMin, displacementMax],
-        queryFn: () => fetchAllMotorcyclesSummary({ page: page - 1, size: pageSize, category, manufacturer, horsePowerMin, horsePowerMax, displacementMin, displacementMax }),
+        queryKey: ["motorcycles", page, pageSize, category, manufacturer, horsePowerMin, horsePowerMax, displacementMin, displacementMax, sort],
+        queryFn: () => fetchAllMotorcyclesSummary({ page: page - 1, size: pageSize, category, manufacturer, horsePowerMin, horsePowerMax, displacementMin, displacementMax, sort }),
     });
 
     if (status === "pending") {
@@ -45,10 +48,12 @@ const MotorcyclesSummaryList: React.FC<Props> = ({ motorcycles }) => {
                 displacementMin={displacementMin}
                 displacementMax={displacementMax}
                 setFilters={setFilters}
+                setShowPagination={setShowPagination}
             />
 
             <div className="max-w-7xl mx-auto px-4">
-                {/* <SortDropdown selectedSort={sort} onSortChange={setSort} /> */}
+                <SortDropdown selectedSort={sort || ""}
+                    onSortChange={(newSort) => setFilters({ sort: newSort })} />
 
                 {/* 🏍️ Motorcycles Grid */}
                 <motion.div
@@ -69,6 +74,7 @@ const MotorcyclesSummaryList: React.FC<Props> = ({ motorcycles }) => {
                     setPage={setPage}
                     setPageSize={setPageSize}
                     totalPages={totalPages}
+                    showPagination={showPagination}
                 />
             </div>
         </div >

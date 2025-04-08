@@ -19,6 +19,7 @@ type FetchProps = {
     horsePowerMax?: number;
     displacementMin?: number;
     displacementMax?: number;
+    sort?: string;
   }
 
 export async function fetchAllMotorcyclesSummary({
@@ -30,8 +31,8 @@ export async function fetchAllMotorcyclesSummary({
     horsePowerMin,
     horsePowerMax,
     displacementMin,
-    displacementMax
-//   }: FetchProps): Promise<MotorcycleSummary[]> {
+    displacementMax,
+    sort
   }: FetchProps): Promise<{motorcycles : MotorcycleSummary[], totalPages: number}> {
     try {
       const params = new URLSearchParams({
@@ -46,6 +47,7 @@ export async function fetchAllMotorcyclesSummary({
       if (horsePowerMax) params.append("horsePowerMax", String(horsePowerMax));
       if (displacementMin) params.append("displacementMin", String(displacementMin));
       if (displacementMax) params.append("displacementMax", String(displacementMax));
+      if (sort) params.append("sort", sort);
   
       const url = `${API_BASE_URL}/motorcycles?${params.toString()}`;
       console.log("🚀 Fetching data from:", url);
