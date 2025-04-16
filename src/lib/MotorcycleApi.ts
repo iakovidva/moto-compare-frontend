@@ -1,3 +1,4 @@
+import { Brand } from "@/components/motorcycles/PopularManufacturers";
 import { CategoryEnum, ManufacturerEnum } from "@/constants/enums";
 import { groupedSpecsSchema, motorcycleSchema } from "@/constants/motorcycleSchema";
 import { AddMotorcycleRequestModel } from "@/models/AddMotorcycleRequestModel";
@@ -19,19 +20,23 @@ type FetchProps = {
     horsePowerMax?: number;
     displacementMin?: number;
     displacementMax?: number;
+    yearMin?: number;
+    yearMax?: number;
     sort?: string;
   }
 
 export async function fetchAllMotorcyclesSummary({
     page = 0,
     size = 12,
+    search,
     manufacturer,
     category,
-    search,
     horsePowerMin,
     horsePowerMax,
     displacementMin,
     displacementMax,
+    yearMin,
+    yearMax,
     sort
   }: FetchProps): Promise<{motorcycles : MotorcycleSummary[], totalPages: number}> {
     try {
@@ -47,6 +52,8 @@ export async function fetchAllMotorcyclesSummary({
       if (horsePowerMax) params.append("horsePowerMax", String(horsePowerMax));
       if (displacementMin) params.append("displacementMin", String(displacementMin));
       if (displacementMax) params.append("displacementMax", String(displacementMax));
+      if (yearMin) params.append("yearMin", String(yearMin));
+      if (yearMax) params.append("yearMax", String(yearMax));
       if (sort) params.append("sort", sort);
   
       const url = `${API_BASE_URL}/motorcycles?${params.toString()}`;
@@ -74,14 +81,41 @@ export async function fetchAllMotorcyclesSummary({
         totalPages: 0
     }
     }
-  }
+}
+
+export async function fetchPopularManufacturers() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/motorcycles/popular-manufacturers`, {
+            method: "GET",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            next: {revalidate: 60}
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch');
+        }
+        const data = await response.json();
+        const mapped: Brand[] = data.map( (item:any) => ({
+            name: item.manufacturer,
+            count: item.count,
+            logo: `/images/manufacturers/${item.manufacturer.toLowerCase()}-logo.png`
+        }))
+        return mapped;
+
+    } catch (error) {
+        console.error("Error fetching popular manufacturers", error);
+        return null;
+    }
+}
 
 export async function fetchMotorcycleDetails(motorcycleId: string) : Promise<MotorcycleDetailsModel | null> {
     try {
         const response = await fetch(`${API_BASE_URL}/motorcycles/${motorcycleId}`, {
             method: "GET",
             headers: {
-                "Contenty-Type" : "application/json"
+                "Content-Type" : "application/json"
             },
             next: {revalidate: 60}
         });

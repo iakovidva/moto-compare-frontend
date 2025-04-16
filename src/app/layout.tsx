@@ -20,7 +20,7 @@ export default function RootLayout({
       </head>
       <body className="bg-background-color">
         <MainNavigation />
-        <QueryProvider> {/* ✅ Wrap children in QueryProvider */}
+        <QueryProvider>
           {children}
         </QueryProvider>
       </body>
