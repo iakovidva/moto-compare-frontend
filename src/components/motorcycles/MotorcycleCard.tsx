@@ -14,9 +14,9 @@ const MotorcycleCard = ({ motorcycle }: { motorcycle: MotorcycleSummary }) => {
                 <Image
                     alt={motorcycle.model}
                     src={motorcycle.image}
-                    width={300}
-                    height={200}
-                    className="w-full h-48 object-cover"
+                    width={200}
+                    height={100}
+                    className="w-full h-32 object-cover"
                 />
             </Link>
             <div className="p-4">
