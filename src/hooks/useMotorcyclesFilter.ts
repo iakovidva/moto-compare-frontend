@@ -9,12 +9,15 @@ export function useMotorcycleFilters() {
   const router = useRouter();
 
   const filters: MotorcycleFilters = {
+    search: searchParams.get("search") || undefined,
     category: searchParams.get("category") || undefined,
     manufacturer: searchParams.get("manufacturer") || undefined,
     horsePowerMin: Number(searchParams.get("horsePowerMin")) || undefined,
     horsePowerMax: Number(searchParams.get("horsePowerMax")) || undefined,
     displacementMin: Number(searchParams.get("displacementMin")) || undefined,
     displacementMax: Number(searchParams.get("displacementMax")) || undefined,
+    yearMin: Number(searchParams.get("yearMin")) || undefined,
+    yearMax: Number(searchParams.get("yearMax")) || undefined,
     sort: searchParams.get("sort") || undefined,
   };
 
