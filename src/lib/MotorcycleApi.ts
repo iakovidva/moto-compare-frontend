@@ -1,10 +1,10 @@
-import { Brand } from "@/components/motorcycles/PopularManufacturers";
 import { CategoryEnum, ManufacturerEnum } from "@/constants/enums";
 import { groupedSpecsSchema, motorcycleSchema } from "@/constants/motorcycleSchema";
 import { AddMotorcycleRequestModel } from "@/models/AddMotorcycleRequestModel";
 import { IncorrectSpecReportModel } from "@/models/IncorrectSpecRequestModel";
 import { MotorcycleDetailsModel } from "@/models/MotorcycleDetailsModel";
 import { MotorcycleSummary } from "@/models/MotorcycleSummary";
+import { PopularManufacturer } from "@/models/PopularManufacturer";
 import { UserRequestModel } from "@/models/UserRequestModel";
 import { z } from "zod";
 
@@ -97,7 +97,7 @@ export async function fetchPopularManufacturers() {
             throw new Error('Failed to fetch');
         }
         const data = await response.json();
-        const mapped: Brand[] = data.map( (item:any) => ({
+        const mapped: PopularManufacturer[] = data.map( (item:any) => ({
             name: item.manufacturer,
             count: item.count,
             logo: `/images/manufacturers/${item.manufacturer.toLowerCase()}-logo.png`
