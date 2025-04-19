@@ -42,7 +42,6 @@ export default async function MotorcyclePage({ params }: Props) {
             <div className="flex flex-col lg:flex-row lg:space-x-8">
                 <div className="lg:flex-grow bg-white shadow-lg rounded-lg overflow-hidden">
 
-                    {/* Motorcycle Image */}
                     <div className="relative aspect-video">
                         <Image
                             src={motorcycle.image}
@@ -60,15 +59,11 @@ export default async function MotorcyclePage({ params }: Props) {
                         totalReviews={reviews.length}
                     />
 
-                    {/* Motorcycle Details */}
                     <div className="p-6">
                         <h1 className="text-3xl font-bold mb-2">{motorcycle.model}</h1>
                         <p className="text-gray-600 mb-4">{motorcycle.manufacturer}</p>
 
-                        {/* Details page */}
                         <MotorcycleDetails motorcycle={motorcycle} />
-
-                        {/* 🆕 Action Buttons Section */}
                         <ActionButtons bike={motorcycle} />
                     </div>
 
@@ -77,7 +72,6 @@ export default async function MotorcyclePage({ params }: Props) {
                     </div>
                 </div>
 
-                {/* similar bikes */}
                 <div className="lg:self-start mt-8 lg:mt-0 lg:w-1/3 lg:max-w-[400px] bg-gray-100 p-4 rounded-lg shadow-md">
                     <SimilarBikes similarBikes={similarBikes} />
                 </div>
