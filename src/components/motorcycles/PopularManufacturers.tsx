@@ -28,7 +28,7 @@ const PopularManufacturers = ({ onSelect, selected }: PopularManufacturersProps)
                         <button
                             key={manufacturer.name}
                             onClick={() => onSelect(manufacturer.name)}
-                            className={`flex flex-col items-center w-[100px] p-2 rounded-xl border transition duration-200 shadow-sm
+                            className={`flex flex-col items-center w-[80px] p-2 rounded-xl border transition duration-200 shadow-sm
                   ${isSelected
                                     ? "bg-blue-600 text-white border-blue-600"
                                     : "bg-white hover:shadow-md hover:border-blue-300"}

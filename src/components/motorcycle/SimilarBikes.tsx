@@ -1,6 +1,7 @@
 import { SimilarBike } from "@/models/SimilarBike";
 import Image from "next/image";
 import Link from "next/link";
+import CompareToggleButton from "../comparison/CompareToggleButton";
 
 interface SimilarBikesProps {
     similarBikes: SimilarBike[],
@@ -15,26 +16,33 @@ export default function SimilarBikes({ similarBikes }: SimilarBikesProps) {
 
             <div className="space-y-4">
                 {similarBikes.map((bike) => (
-                    <Link
-                        key={bike.id}
-                        href={`/motorcycles/${bike.id}`}
-                        className="block bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition"
-                    >
-                        <div className="flex items-center space-x-4">
-                            <div className="w-20 h-16 relative">
-                                <Image
-                                    src={bike.image}
-                                    alt={bike.model}
-                                    fill
-                                    className="object-cover rounded"
-                                />
-                            </div>
-                            <div>
-                                <p className="font-semibold">{bike.model}</p>
-                                <p className="text-sm text-gray-500">{bike.manufacturer}</p>
-                            </div>
+                    <div key={bike.id} className="flex flex-wrap justify-between items-center">
+                        <div className="grow">
+                            <Link
+                                key={bike.id}
+                                href={`/motorcycles/${bike.id}`}
+                                className="block bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition"
+                            >
+                                <div className="flex items-center space-x-4">
+                                    <div className="w-20 h-16 relative">
+                                        <Image
+                                            src={bike.image}
+                                            alt={bike.model}
+                                            fill
+                                            className="object-cover rounded"
+                                        />
+                                    </div>
+                                    <div>
+                                        <p className="font-semibold">{bike.model}</p>
+                                        <p className="text-sm text-gray-500">{bike.manufacturer}</p>
+                                    </div>
+                                </div>
+                            </Link>
                         </div>
-                    </Link>
+                        <div>
+                            <CompareToggleButton bike={bike} compact />
+                        </div>
+                    </div>
                 ))}
             </div>
         </>

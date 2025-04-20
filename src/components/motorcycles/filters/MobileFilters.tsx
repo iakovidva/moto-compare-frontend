@@ -8,7 +8,7 @@ const MobileFilters = ({ children }: { children: React.ReactNode }) => {
     return (
         <>
             <button
-                className="fixed bottom-4 right-4 h-12 bg-blue-600 text-white px-6 rounded-full shadow-md flex items-center justify-center lg:hidden z-40"
+                className="fixed bottom-0 right-4 bg-blue-600 text-white my-4 px-5 py-3 rounded-full shadow-md flex items-center justify-center lg:hidden z-40"
                 onClick={() => setIsOpen(true)}
             >
                 Filters

@@ -10,6 +10,7 @@ import ActionButtons from '@/components/motorcycle/ActionButtons';
 import MotorcycleDetails from '@/components/motorcycle/MotorcycleDetails';
 import { fetchMotorcycleDetails } from '@/lib/MotorcycleApi';
 import { MotorcycleDetailsModel, ReviewResponse } from '@/models/MotorcycleDetailsModel';
+import CompareToggleButton from '@/components/comparison/CompareToggleButton';
 
 type Params = {
     motorcycle: string;
@@ -52,8 +53,9 @@ export default async function MotorcyclePage({ params }: Props) {
                             sizes="(max-width: 896px) 100vw, 896px"
                         />
                     </div>
-
-                    {/* ⭐ User Rating (Extracted to Component) */}
+                    <div className="flex justify-end mr-4">
+                        <CompareToggleButton bike={motorcycle} />
+                    </div>
                     <RatingSummary
                         averageRating={averageRating}
                         totalReviews={reviews.length}

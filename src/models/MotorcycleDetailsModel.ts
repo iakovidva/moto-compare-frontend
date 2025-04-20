@@ -5,17 +5,10 @@ import { z } from "zod";
 export type ManufacturerEnumType = z.infer<typeof ManufacturerEnum>;
 export type CategoryEnumType = z.infer<typeof CategoryEnum>;
 
-export interface MotorcycleDetailsModel {
-    manufacturer: ManufacturerEnumType;
-    model: string;
-    yearRange: string;
-    image: string;
-    category: CategoryEnumType;
-
+export interface MotorcycleDetailsModel extends MotorcycleSummary {
+    
     // Engine fields
     engineDesign: string;
-    displacement: number;
-    horsePower: number;
     torque: number;
     bore: number;
     stroke: number;
