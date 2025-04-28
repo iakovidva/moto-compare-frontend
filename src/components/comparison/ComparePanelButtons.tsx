@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { MotorcycleSummary } from "@/models/MotorcycleSummary";
+import { slugify } from "@/lib/utils";
 
 type CompareNowButtonProps = {
     selected: MotorcycleSummary[],
@@ -12,11 +13,15 @@ export const CompareNowButton = ({ selected, setIsOpenMobile }: CompareNowButton
     const router = useRouter();
 
     const handleCompareClick = () => {
-        if (selected.length >= 2) {
-            if (setIsOpenMobile) setIsOpenMobile(false);
-            const query = selected.map((bike) => bike.id).join(",");
-            router.push(`/compare?ids=${query}`);
-        }
+
+        if (selected.length < 2) return;
+        if (setIsOpenMobile) setIsOpenMobile(false);
+        const q: string = selected.map((bike) =>
+            (slugify(bike.model) + '-' + bike.id))
+            .join("_vs_");
+
+        router.push(`/compare/${q}`);
+
     };
 
     const isDisabled = selected.length < 2;
