@@ -132,6 +132,28 @@ export async function fetchMotorcycleDetails(motorcycleId: string) : Promise<Mot
     }
 }
 
+export async function fetchMotorcycleSummary(motorcycleId: string) : Promise<MotorcycleSummary | null> {
+    try {
+        const response = await fetch(`${API_BASE_URL}/motorcycles/${motorcycleId}/summary`, {
+            method: "GET",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            next: {revalidate: 60}
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch');
+        }
+        const data : MotorcycleSummary = await response.json();
+        return data;
+
+    } catch (error) {
+        console.error("Error fetching motorcycle", error);
+        return null;
+    }
+}
+
 export async function addMotorcycleRequest(data: AddMotorcycleRequestModel) {
     try {
         const response = await fetch (`${API_BASE_URL}/motorcycles/requests`, {
