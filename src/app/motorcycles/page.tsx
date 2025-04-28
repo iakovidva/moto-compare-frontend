@@ -1,3 +1,4 @@
+import MotorcyclesPageShell from "@/components/motorcycles/MotorcyclesPageShell";
 import MotorcyclesSummaryList from "@/components/motorcycles/MotorcyclesSummaryList";
 import { QueryProvider } from "@/components/providers/QueryProvider";
 import { fetchAllMotorcyclesSummary, fetchPopularManufacturers } from "@/lib/MotorcycleApi";
@@ -17,7 +18,9 @@ export default async function MotorcyclesPage() {
     // const motorcycles = await fetchAllMotorcyclesSummary(0, 6); //TODO
     return (
         <QueryProvider hydrationState={dehydratedState} >
-            <MotorcyclesSummaryList motorcycles={[]} />
+            <MotorcyclesPageShell>
+                <MotorcyclesSummaryList motorcycles={[]} />
+            </MotorcyclesPageShell>
         </QueryProvider>
     );
 };

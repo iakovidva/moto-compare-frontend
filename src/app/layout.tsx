@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import MainNavigation from "@/components/main-header/MainNavigation";
 import { QueryProvider } from "@/components/providers/QueryProvider";
+import CompareSelectionPanel from "@/components/comparison/CompareSelectionPanel";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,6 +23,7 @@ export default function RootLayout({
         <MainNavigation />
         <QueryProvider>
           {children}
+          <CompareSelectionPanel />
         </QueryProvider>
       </body>
     </html>
