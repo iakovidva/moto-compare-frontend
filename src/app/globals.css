@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-    --color-background-color: #E6CBA5;
+    --color-background-color: #F5F5F5;
     --color-popular-motorcycles-background-color: #D97904;
 }
 
