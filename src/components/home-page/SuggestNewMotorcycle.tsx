@@ -1,5 +1,6 @@
 "use client"
 
+import { ManufacturerEnum } from "@/constants/enums";
 import { addMotorcycleRequest } from "@/lib/MotorcycleApi";
 import { useState } from "react";
 
@@ -20,7 +21,7 @@ export default function SuggestNewMotorcycle() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
@@ -64,15 +65,20 @@ export default function SuggestNewMotorcycle() {
             <p className="mb-4 text-gray-300">Let us know the model you are looking for, and we will add it soon!</p>
 
             <form onSubmit={handleSubmit} className="flex flex-col w-full max-w-md space-y-4">
-                <input
-                    type="text"
-                    name="manufacturer"
-                    placeholder="Manufacturer"
+                <select
                     value={formData.manufacturer}
-                    onChange={handleChange}
+                    name="manufacturer"
                     className="p-3 rounded-md bg-gray-800 text-white border border-gray-600 focus:ring-2 focus:ring-orange-500"
+                    onChange={handleChange}
                     required
-                />
+                >
+                    <option value="" disabled>Select Manufacturer</option>
+                    {ManufacturerEnum.options.map((name) => (
+                        <option key={name} value={name}>
+                            {name}
+                        </option>
+                    ))}
+                </select>
                 <input
                     type="text"
                     name="model"
