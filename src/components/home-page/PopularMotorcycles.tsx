@@ -1,5 +1,5 @@
 
-import { fetchAllMotorcyclesSummary } from "@/lib/MotorcycleApi";
+import { fetchAllMotorcyclesSummary } from "@/lib/api/motorcycles";
 import { MotorcycleSummary } from "@/models/MotorcycleSummary";
 import Image from "next/image";
 import Link from "next/link";

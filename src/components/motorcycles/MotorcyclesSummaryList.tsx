@@ -3,7 +3,7 @@
 import MotorcycleCard from "@/components/motorcycles/MotorcycleCard";
 import { motion } from "framer-motion";
 import { MotorcycleSummary } from "@/models/MotorcycleSummary";
-import { fetchAllMotorcyclesSummary } from "@/lib/MotorcycleApi";
+import { fetchAllMotorcyclesSummary } from "@/lib/api/motorcycles";
 import { useMotorcycleFilters } from "@/hooks/useMotorcyclesFilter";
 import FiltersPanel from "./filters/FiltersPanel";
 import { useQuery } from "@tanstack/react-query";

@@ -1,7 +1,7 @@
 import MotorcyclesPageShell from "@/components/motorcycles/MotorcyclesPageShell";
 import MotorcyclesSummaryList from "@/components/motorcycles/MotorcyclesSummaryList";
 import { QueryProvider } from "@/components/providers/QueryProvider";
-import { fetchAllMotorcyclesSummary, fetchPopularManufacturers } from "@/lib/MotorcycleApi";
+import { fetchAllMotorcyclesSummary, fetchPopularManufacturers } from "@/lib/api/motorcycles";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 
 export default async function MotorcyclesPage() {

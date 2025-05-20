@@ -3,10 +3,10 @@
 import React, { useState } from "react";
 import { MotorcycleDetailsModel } from "@/models/MotorcycleDetailsModel";
 import { groupedMotoSpecs } from "@/constants/groupedMotorcycleDetails";
-import { reportIncorrectSpec } from "@/lib/MotorcycleApi";
 import { useParams } from "next/navigation";
 import { IncorrectSpecReportModel } from "@/models/IncorrectSpecRequestModel";
 import { SpecCard } from "./SpecCard";
+import { reportIncorrectSpec } from "@/lib/api/requests";
 
 interface ReportIncorrectSpecProps {
     bike: MotorcycleDetailsModel;

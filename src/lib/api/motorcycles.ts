@@ -1,14 +1,12 @@
 import { CategoryEnum, ManufacturerEnum } from "@/constants/enums";
 import { groupedSpecsSchema, motorcycleSchema } from "@/constants/motorcycleSchema";
-import { AddMotorcycleRequestModel } from "@/models/AddMotorcycleRequestModel";
-import { IncorrectSpecReportModel } from "@/models/IncorrectSpecRequestModel";
 import { MotorcycleDetailsModel } from "@/models/MotorcycleDetailsModel";
 import { MotorcycleSummary } from "@/models/MotorcycleSummary";
 import { PopularManufacturer } from "@/models/PopularManufacturer";
-import { UserRequestModel } from "@/models/UserRequestModel";
 import { z } from "zod";
+import { fetchWithAuth } from "./fetchWithAuth";
+import { API_BASE_URL } from "../utils";
 
-const API_BASE_URL = "http://localhost:8080/api";
 
 type FetchProps = {
     page?: number;
@@ -57,8 +55,7 @@ export async function fetchAllMotorcyclesSummary({
       if (sort) params.append("sort", sort);
   
       const url = `${API_BASE_URL}/motorcycles?${params.toString()}`;
-      console.log("🚀 Fetching data from:", url);
-  
+      
       const response = await fetch(url, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -154,93 +151,11 @@ export async function fetchMotorcycleSummary(motorcycleId: string) : Promise<Mot
     }
 }
 
-export async function addMotorcycleRequest(data: AddMotorcycleRequestModel) {
-    try {
-        const response = await fetch (`${API_BASE_URL}/motorcycles/requests`, {
-            method: "POST",
-            headers: {
-                "Content-Type" : "application/json",
-            },
-            body: JSON.stringify(data),
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status} and ${response.statusText}`);
-        }
-        return ;
-
-    } catch (error) {
-        console.error('Error submitting motorcycle request:', error);
-        throw error; // Re-throw the error to handle it in the component
-    }
-}
-
-export async function fetchOpenRequests() {
-    try {
-        const response = await fetch (`${API_BASE_URL}/motorcycles/requests`, {
-            method: "GET",
-            headers: {
-                "Content-Type" : "application/json",
-            },
-        });
-
-        if (!response.ok) {
-            console.error(`HTTP error! Status: ${response.status} and ${response.statusText}`);
-            return null;
-        }
-
-        const data = await response.json();
-        return data.map((d : UserRequestModel) => ({
-            id: d.id,
-            requestContent: d.requestContent
-        }));
-
-    } catch (error) {
-        console.error('Error fetching open requests:', error);
-        return null;
-    }
-}
-
-export async function reportIncorrectSpec(data: IncorrectSpecReportModel) {
-    try {
-        const response = await fetch(`${API_BASE_URL}/motorcycles/${data.motorcycleId}/incorrectValue`, {
-            method: "POST",
-            headers: {
-                "Content-Type" : "application/json",
-            },
-            body: JSON.stringify(data)
-        });
-
-        if (!response.ok) {
-            console.error(`HTTP error! Status: ${response.status} and ${response.statusText}`);
-            return null;
-        }
-        console.log("Request sented :) ");
-        return {"message": "submitted"};
-
-    } catch (error) {
-        console.error('Error fetching open requests:', error);
-        return null;
-    }
-}
-
-// First, let's define proper types for your specs
 type SpecValue = string | number | boolean;
 type FlattenedSpecs = Record<string, SpecValue>;
 
 export async function createMotorcycleRequest(formData: z.infer<typeof motorcycleSchema>) {
-    console.log(formData);
-    try {
-        // const motorcycle: Record<string,any> = {
-        //     manufacturer: formData.manufacturer, // Already the correct type (Enum)
-        //     model: formData.model,
-        //     yearRange: formData.yearRange,
-        //     image: formData.image,
-        //     category: formData.category, // Already an Enum
-        //     ...flattenSpecs(formData.groupedSpecs), // Convert groupedSpecs to flat structure
-            
-        // }; 
-            
+    try {   
         const motorcycle: {
             manufacturer: z.infer<typeof ManufacturerEnum>,
             model: string,
@@ -256,7 +171,7 @@ export async function createMotorcycleRequest(formData: z.infer<typeof motorcycl
             ...flattenSpecs(formData.groupedSpecs),
         };
 
-        const response = await fetch(`${API_BASE_URL}/motorcycles`, {
+        const response = await fetchWithAuth(`${API_BASE_URL}/motorcycles`, {
             method: "POST",
             headers: { "Content-Type" : "application/json",},
             body: JSON.stringify(motorcycle),
@@ -271,23 +186,11 @@ export async function createMotorcycleRequest(formData: z.infer<typeof motorcycl
     }
 }
 
-// function flattenSpecs(groupedSpecs: z.infer<typeof groupedSpecsSchema>): Record<string, any> {
-//     const flattened: Record<string, any> = {};
-    
-//     for (const specs of Object.values(groupedSpecs)) {
-//         for (const [key, value] of Object.entries(specs)) {
-//             flattened[key] = value;
-//         }
-//     }
-    
-//     return flattened;
-// }
 function flattenSpecs(groupedSpecs: z.infer<typeof groupedSpecsSchema>): FlattenedSpecs {
     const flattened: FlattenedSpecs = {};
     
     for (const specs of Object.values(groupedSpecs)) {
         for (const [key, value] of Object.entries(specs)) {
-            // Ensure the value matches our SpecValue type
             if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
                 flattened[key] = value;
             } else {

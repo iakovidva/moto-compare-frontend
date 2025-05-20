@@ -8,7 +8,7 @@ import SimilarBikes from '@/components/motorcycle/SimilarBikes';
 import { SimilarBike } from '@/models/SimilarBike';
 import ActionButtons from '@/components/motorcycle/ActionButtons';
 import MotorcycleDetails from '@/components/motorcycle/MotorcycleDetails';
-import { fetchMotorcycleDetails } from '@/lib/MotorcycleApi';
+import { fetchMotorcycleDetails } from '@/lib/api/motorcycles';
 import { MotorcycleDetailsModel, ReviewResponse } from '@/models/MotorcycleDetailsModel';
 import CompareToggleButton from '@/components/comparison/CompareToggleButton';
 

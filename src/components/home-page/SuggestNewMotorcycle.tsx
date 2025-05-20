@@ -1,7 +1,7 @@
 "use client"
 
 import { ManufacturerEnum } from "@/constants/enums";
-import { addMotorcycleRequest } from "@/lib/MotorcycleApi";
+import { addMotorcycleRequest } from "@/lib/api/requests";
 import { useState } from "react";
 
 interface FormData {

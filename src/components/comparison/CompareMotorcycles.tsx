@@ -1,6 +1,6 @@
 "use client";
 
-import { fetchMotorcycleDetails, fetchMotorcycleSummary } from "@/lib/MotorcycleApi";
+import { fetchMotorcycleDetails, fetchMotorcycleSummary } from "@/lib/api/motorcycles";
 import { MotorcycleDetailsModel } from "@/models/MotorcycleDetailsModel";
 import { useCompareStore } from "@/store/compareStore";
 import Image from "next/image";
