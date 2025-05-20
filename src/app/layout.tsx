@@ -3,6 +3,7 @@ import "./globals.css";
 import MainNavigation from "@/components/main-header/MainNavigation";
 import { QueryProvider } from "@/components/providers/QueryProvider";
 import CompareSelectionPanel from "@/components/comparison/CompareSelectionPanel";
+import AuthProvider from "@/components/AuthProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,11 +21,13 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body className="bg-background-color">
-        <MainNavigation />
-        <QueryProvider>
-          {children}
-          <CompareSelectionPanel />
-        </QueryProvider>
+        <AuthProvider>
+          <MainNavigation />
+          <QueryProvider>
+            {children}
+            <CompareSelectionPanel />
+          </QueryProvider>
+        </AuthProvider>
       </body>
     </html>
   );

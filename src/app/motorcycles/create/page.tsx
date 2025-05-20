@@ -7,22 +7,51 @@ import { useEffect } from "react";
 import { z } from "zod";
 import { FieldConfig, specConfig } from "@/constants/specConfig";
 import { CategoryEnum, ManufacturerEnum } from "@/constants/enums";
-import { createMotorcycleRequest } from "@/lib/MotorcycleApi";
+import { createMotorcycleRequest } from "@/lib/api/motorcycles";
+import { withAuth } from "@/components/withAuth";
 
 type FormSchema = z.infer<typeof motorcycleSchema>;
 
-export default function CreateMotorcyclePage() {
+function CreateMotorcyclePage() {
 
     const {
         register,
         handleSubmit,
         formState: { errors },
+        setValue
     } = useForm<FormSchema>({
         resolver: zodResolver(motorcycleSchema),
         defaultValues: {
             image: '/images/motorcycles/default.avif',
         }
     });
+
+    // Function to fill mock data
+    const fillMockData = () => {
+        setValue('manufacturer', ManufacturerEnum.options[0]);
+        setValue('model', 'Test Model');
+        setValue('yearRange', '2020-2023');
+        setValue('category', CategoryEnum.options[0]);
+
+        Object.entries(specConfig).forEach(([category, fields]) => {
+            fields.forEach((field) => {
+                const fieldPath = `groupedSpecs.${category}.${field.key}` as const;
+
+                if (field.type === 'boolean') {
+                    setValue(fieldPath, true);
+                }
+                else if (field.type === 'number') {
+                    setValue(fieldPath, 100);
+                }
+                else if (field.type === 'enum' && field.values) {
+                    setValue(fieldPath, field.values[0]);
+                }
+                else {
+                    setValue(fieldPath, 'Test Value');
+                }
+            });
+        });
+    };
 
     const onSubmit: SubmitHandler<FormSchema> = (data) => {
         console.log('Form data submitted:', data);
@@ -57,6 +86,9 @@ export default function CreateMotorcyclePage() {
                     ))}
                 </div>
                 <div className="text-center">
+                    <button type="button" onClick={fillMockData} className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700">
+                        Fill Mock Data
+                    </button>
                     <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
                         Submit
                     </button>
@@ -142,3 +174,5 @@ const InputBasicInformation = ({ register, errors }: { register: UseFormRegister
         </>
     );
 }
+
+export default withAuth(CreateMotorcyclePage, { requiredRole: "ADMIN" });

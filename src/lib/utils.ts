@@ -1,3 +1,7 @@
+import { JwtPayload } from "@/models/JwtPayload";
+
+export const API_BASE_URL = "http://localhost:8080/api";
+
 export const slugify = (s: string): string => {
   return s ? s
     .toLowerCase()
@@ -13,4 +17,16 @@ export const extractMotoIdsFromPathname = (path: string): string[] => {
       matches.push(match[1]);
   }
   return matches;
+}
+
+export const parseJwt = (token: string): JwtPayload => {
+  const base64Payload = token.split('.')[1];
+  const decoded = JSON.parse(atob(base64Payload));
+  
+  return {
+    sub: decoded.sub, 
+    role: decoded.role, 
+    iat: decoded.iat, 
+    exp: decoded.exp
+  };
 }
