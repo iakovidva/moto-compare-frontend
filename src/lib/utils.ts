@@ -30,3 +30,10 @@ export const parseJwt = (token: string): JwtPayload => {
     exp: decoded.exp
   };
 }
+
+export const validatePassword = (pass: string) => {
+  if (pass.length < 6) return 'Password must be at least 6 characters';
+  if (!/[a-zA-Z]/.test(pass)) return 'Password must contain at least one letter';
+  if (!/\d/.test(pass)) return 'Password must contain at least one number';
+  return '';
+};
