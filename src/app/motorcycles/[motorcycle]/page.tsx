@@ -1,16 +1,14 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Metadata } from 'next';
-
-import RatingSummary from '@/components/motorcycle/RatingSummary';
-import ReviewsSection from '@/components/motorcycle/ReviewsSection';
 import SimilarBikes from '@/components/motorcycle/SimilarBikes';
 import { SimilarBike } from '@/models/SimilarBike';
 import ActionButtons from '@/components/motorcycle/ActionButtons';
 import MotorcycleDetails from '@/components/motorcycle/MotorcycleDetails';
 import { fetchMotorcycleDetails } from '@/lib/api/motorcycles';
-import { MotorcycleDetailsModel, ReviewResponse } from '@/models/MotorcycleDetailsModel';
+import { MotorcycleDetailsModel } from '@/models/MotorcycleDetailsModel';
 import CompareToggleButton from '@/components/comparison/CompareToggleButton';
+import ReviewsWrapper from '@/components/motorcycle/reviews/ReviewsWrapper';
 
 type Params = {
     motorcycle: string;
@@ -30,12 +28,7 @@ export default async function MotorcyclePage({ params }: Props) {
         notFound();
     }
 
-    const reviews: ReviewResponse[] = motorcycle.reviews;
-
     const similarBikes: SimilarBike[] = motorcycle.similarMotorcycles;
-
-    const averageRating: number = reviews.length
-        ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length) : 0;
 
     return (
         <div className="container mx-auto p-8">
@@ -56,10 +49,8 @@ export default async function MotorcyclePage({ params }: Props) {
                     <div className="flex justify-end mr-4">
                         <CompareToggleButton bike={motorcycle} />
                     </div>
-                    <RatingSummary
-                        averageRating={averageRating}
-                        totalReviews={reviews.length}
-                    />
+
+                    <ReviewsWrapper option="rating-summary" motorcycleId={motorcycle.id} />
 
                     <div className="p-6">
                         <h1 className="text-3xl font-bold mb-2">{motorcycle.model}</h1>
@@ -70,7 +61,7 @@ export default async function MotorcyclePage({ params }: Props) {
                     </div>
 
                     <div id="review-section">
-                        <ReviewsSection reviews={reviews} />
+                        <ReviewsWrapper option="reviews" motorcycleId={motorcycle.id} />
                     </div>
                 </div>
 

@@ -1,11 +1,16 @@
+"use client"
 
-const RatingSummary: React.FC<{ averageRating: number, totalReviews: number }> = ({ averageRating, totalReviews }) => {
+import { Review } from "@/models/Review";
+
+export default function RatingSummary({ reviews }: { reviews: Review[] }) {
+
+    const average = reviews.length ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length : 0;
     return (
         <div className="mb-6 flex justify-center items-center flex-col">
             <h3 className="text-lg font-bold">User Rating</h3>
             <div className="flex items-center space-x-2">
                 <span className="text-yellow-400 text-xl">
-                    {"★".repeat(Math.round(averageRating))}{"☆".repeat(5 - Math.round(averageRating))}
+                    {"★".repeat(Math.round(average))}{"☆".repeat(5 - Math.round(average))}
                 </span>
             </div>
             <div className="flex items-center space-x-2">
@@ -13,13 +18,10 @@ const RatingSummary: React.FC<{ averageRating: number, totalReviews: number }> =
                 <a
                     className="text-gray-700 underline hover:text-blue-500 transition"
                     href="#review-section"
-                // onClick={onScrollToReviews} 
                 >
-                    ({averageRating} / 5 based on {totalReviews} reviews)
+                    <p>{average.toFixed(1)} stars from {reviews.length} reviews</p>
                 </a>
             </div>
         </div>
     );
 }
-
-export default RatingSummary;
