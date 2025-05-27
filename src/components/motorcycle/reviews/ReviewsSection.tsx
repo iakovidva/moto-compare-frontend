@@ -91,6 +91,7 @@ export default function ReviewsSection({ motorcycleId, reviews, onReviewSubmitte
                     <AuthModal
                         isOpen={authModalOpen}
                         onClose={() => setAuthModalOpen(false)}
+                        message="✨ Please log in or create an account to leave a review and share your experience!"
                     />
                 )}
 

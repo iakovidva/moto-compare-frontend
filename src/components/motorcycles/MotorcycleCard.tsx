@@ -5,7 +5,7 @@ import { MotorcycleSummary } from "@/models/MotorcycleSummary";
 import { useCompareStore } from "@/store/compareStore";
 import CompareToggleButton from "../comparison/CompareToggleButton";
 
-const MotorcycleCard = ({ motorcycle }: { motorcycle: MotorcycleSummary }) => {
+const MotorcycleCard = ({ motorcycle, actionSlot }: { motorcycle: MotorcycleSummary, actionSlot?: React.ReactNode }) => {
 
     const { selected } = useCompareStore();
 
@@ -13,7 +13,7 @@ const MotorcycleCard = ({ motorcycle }: { motorcycle: MotorcycleSummary }) => {
 
     return (
         <motion.div
-            className={`flex flex-col justify-between border rounded-lg shadow-md overflow-hidden bg-white hover:shadow-lg
+            className={`flex flex-col justify-between border rounded-lg shadow-md overflow-hidden bg-white hover:shadow-lg h-full
                     ${isMotoSelected ? "border-4 rounded-3xl border-blue-800 bg-blue-400" : ""}`}
             whileHover={{ scale: 1.02 }}
         >
@@ -32,7 +32,8 @@ const MotorcycleCard = ({ motorcycle }: { motorcycle: MotorcycleSummary }) => {
                     <p className="text-gray-800">{motorcycle.displacement}cc {motorcycle.horsePower} HP</p>
                 </div>
             </Link>
-            <div className="flex justify-end gap-2 px-3 py-2 text-sm border-t">
+            <div className="flex flex-col sm:flex-row justify-end gap-2 px-3 py-2 text-sm border-t">
+                {actionSlot}
                 <CompareToggleButton bike={motorcycle} compact />
             </div>
 

@@ -11,7 +11,7 @@ type FormState = {
     confirmPassword: string;
 };
 
-export default function AuthModal({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
+export default function AuthModal({ isOpen, onClose, message }: { isOpen: boolean, onClose: () => void, message?: string }) {
     const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
     const [errors, setErrors] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -71,6 +71,13 @@ export default function AuthModal({ isOpen, onClose }: { isOpen: boolean, onClos
                 >
                     ✕
                 </button>
+
+                {/* Optional Message */}
+                {message && (
+                    <div className="m-2 text-sm text-center text-white bg-blue-500/20 border border-blue-400 rounded p-3">
+                        {message}
+                    </div>
+                )}
 
                 {/* Tabs */}
                 <div className="flex justify-center space-x-6 mb-6 border-b border-gray-700 pb-2">
@@ -156,7 +163,7 @@ type FormInputFieldProps = {
 const FormInputField = ({ name, label, type = "text", value, onChange, disabled }: FormInputFieldProps) => {
     return (
         <div>
-            <label className="block text-sm font-medium text-left mb-1">{label}</label>
+            <label className="block text-sm text-white font-medium text-left mb-1">{label}</label>
             <input
                 id={name}
                 name={name}

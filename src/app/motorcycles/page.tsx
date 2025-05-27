@@ -3,6 +3,7 @@ import MotorcyclesSummaryList from "@/components/motorcycles/MotorcyclesSummaryL
 import { QueryProvider } from "@/components/providers/QueryProvider";
 import { fetchAllMotorcyclesSummary, fetchPopularManufacturers } from "@/lib/api/motorcycles";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { Suspense } from "react";
 
 export default async function MotorcyclesPage() {
 
@@ -19,7 +20,9 @@ export default async function MotorcyclesPage() {
     return (
         <QueryProvider hydrationState={dehydratedState} >
             <MotorcyclesPageShell>
-                <MotorcyclesSummaryList motorcycles={[]} />
+                <Suspense>
+                    <MotorcyclesSummaryList motorcycles={[]} />
+                </Suspense>
             </MotorcyclesPageShell>
         </QueryProvider>
     );

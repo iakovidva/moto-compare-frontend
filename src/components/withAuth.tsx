@@ -1,4 +1,4 @@
-import React, { JSX, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 
@@ -6,7 +6,7 @@ type WithAuthOptions = {
     requiredRole?: "ADMIN" | "USER";
 };
 
-export function withAuth<T extends JSX.IntrinsicAttributes>(
+export function withAuth<T extends {}>(
     Component: React.ComponentType<T>,
     options?: WithAuthOptions
 ) {

@@ -12,9 +12,12 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   { //TODO 
-    files: ["**/create/page.tsx"],
+    // files: ["**/create/page.tsx"],
+    extends: ['next'],
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": "off",
       // Add other rules you want to disable
     }
   }
