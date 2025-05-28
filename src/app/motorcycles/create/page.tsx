@@ -175,4 +175,4 @@ const InputBasicInformation = ({ register, errors }: { register: UseFormRegister
     );
 }
 
-export default withAuth(CreateMotorcyclePage, { requiredRole: "ADMIN" });
+export default withAuth(CreateMotorcyclePage, { requiredRole: "ADMIN" }); //TODO WHEN REFRESH BREAKS!!!

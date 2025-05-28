@@ -37,4 +37,4 @@ function RequestsPage() {
     );
 }
 
-export default withAuth(RequestsPage, { requiredRole: "ADMIN" });
+export default withAuth(RequestsPage, { requiredRole: "ADMIN" }); //TODO WHEN REFRESH BREAKS!!!
