@@ -28,7 +28,7 @@ export async function fetchOpenRequests() {
 
 export async function addMotorcycleRequest(data: AddMotorcycleRequestModel) {
     try {
-        const response = await fetch (`${API_BASE_URL}/motorcycles/requests`, {
+        const response = await fetchWithAuth(`${API_BASE_URL}/motorcycles/requests`, {
             method: "POST",
             headers: {
                 "Content-Type" : "application/json",
@@ -49,7 +49,7 @@ export async function addMotorcycleRequest(data: AddMotorcycleRequestModel) {
 
 export async function reportIncorrectSpec(data: IncorrectSpecReportModel) {
     try {
-        const response = await fetch(`${API_BASE_URL}/motorcycles/${data.motorcycleId}/incorrectValue`, {
+        const response = await fetchWithAuth(`${API_BASE_URL}/motorcycles/${data.motorcycleId}/incorrectValue`, {
             method: "POST",
             headers: {
                 "Content-Type" : "application/json",
