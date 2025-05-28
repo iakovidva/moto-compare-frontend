@@ -17,7 +17,7 @@ export const useFavoriteMotorcycles = () => {
                             credentials: "include"
                         });
             if (!res.ok) throw new Error("Failed to fetch reviews");
-            return res.json();
+            return await res.json();
         },
         enabled: !!accessToken,
         staleTime: 0,
