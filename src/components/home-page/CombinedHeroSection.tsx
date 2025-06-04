@@ -2,46 +2,46 @@ import Link from "next/link";
 
 export default function CombinedHeroSection() {
     return (
-        <section className="flex flex-col lg:flex-row w-full">
-            {/* Compare Hero - Left Column */}
-            <div
-                className="relative w-full lg:w-1/2 h-[40vh] md:h-[50vh] bg-cover bg-center flex items-center justify-center"
-            >
-                <div className="absolute inset-0 bg-black opacity-90"></div>
-                <div className="relative z-10 text-center px-4">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white">
-                        Compare Your Favorite Motorcycles
-                    </h2>
-                    <p className="mt-2 text-base md:text-lg text-gray-200">
-                        Side-by-side specs and performance to find your ideal ride.
-                    </p>
-                    <Link href="/compare"
-                        className="mt-4 inline-block px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-md text-white font-semibold transition">
-                        Start Comparing
+        <section className="grid grid-cols-1 lg:grid-cols-2">
+            {/* Compare Hero */}
+            {/* bg-[url('/images/hero-compare.jpg')] bg-cover bg-center */}
+            <div className="relative h-[45vh] lg:h-[60vh] bg-amber-700">
+                <Hero
+                    label="Compare. Choose. Ride."
+                    text="Side-by-side motorcycle specs to help you pick the perfect ride."
+                    buttonText="Start Comparing"
+                    buttonClasses="bg-blue-600 hover:bg-blue-700"
 
-                    </Link>
-                </div>
+                />
+            </div>
+            <div className="relative h-[45vh] lg:h-[60vh] bg-amber-800">
+                <Hero
+                    label="Browse Motorcycles"
+                    text="Explore our catalog by style, brand, or performance level."
+                    buttonText="Browse Now"
+                    buttonClasses="bg-green-600 hover:bg-green-700"
+
+                />
             </div>
 
-            {/* Browse Hero - Right Column */}
-            <div
-                className="relative w-full lg:w-1/2 h-[40vh] md:h-[50vh] bg-cover bg-center flex items-center justify-center"
-            >
-                <div className="absolute inset-0 bg-black opacity-80"></div>
-                <div className="relative z-10 text-center px-4">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white">
-                        Browse All Motorcycles
-                    </h2>
-                    <p className="mt-2 text-base md:text-lg text-gray-200">
-                        Explore our extensive catalog to find your dream motorcycle.
-                    </p>
-                    <Link href="/motorcycles"
-                        className="mt-4 inline-block px-6 py-3 bg-green-600 hover:bg-green-700 rounded-md text-white font-semibold transition">
-                        Browse Motorcycles
 
-                    </Link>
-                </div>
-            </div>
         </section>
+    );
+}
+
+const Hero = ({ label, text, buttonText, buttonClasses }: { label: string, text: string, buttonText: string, buttonClasses: string }) => {
+    return (
+        <>
+            <div className="absolute inset-0  bg-opacity-60" />
+            <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
+                <h2 className="text-white text-4xl font-bold">{label}</h2>
+                <p className="text-gray-200 mt-2 text-lg max-w-md">{text}</p>
+                <Link href="/motorcycles">
+                    <span className={`mt-4 inline-block text-white font-semibold py-2 px-5 rounded-xl shadow transition ${buttonClasses}`}>
+                        {buttonText}
+                    </span>
+                </Link>
+            </div>
+        </>
     );
 }

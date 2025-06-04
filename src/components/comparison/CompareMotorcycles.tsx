@@ -63,19 +63,40 @@ export default function CompareMotorcycles() {
 
     if (selected.length === 0) {
         return (
-            <div className="max-w-5xl mx-auto px-4 py-10 text-center">
-                <h2 className="text-2xl font-semibold mb-4">No motorcycles selected</h2>
-                <p className="text-gray-600 mb-6">
-                    Select up to 4 motorcycles to compare their specs side by side.
+            <div className="max-w-3xl mx-auto px-6 py-16 text-center bg-white shadow-lg rounded-2xl">
+                <div className="flex justify-center mb-6">
+                    <div className="bg-blue-100 text-blue-600 p-4 rounded-full">
+                        <p>🏍️</p>
+                    </div>
+                </div>
+
+                <h2 className="text-3xl font-bold text-gray-800 mb-3">No Motorcycles Selected</h2>
+                <p className="text-gray-600 mb-6 max-w-md mx-auto">
+                    Use the <strong>Compare</strong> button while browsing to add motorcycles here.
+                    Compare up to <strong>4 bikes</strong> side-by-side and find the perfect match for your ride.
                 </p>
-                <Link
-                    href="/motorcycles"
-                    className="bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition"
-                >
-                    Browse Motorcycles
+
+                <Link href="/motorcycles">
+                    <span className="inline-block px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow transition">
+                        Browse Motorcycles
+                    </span>
                 </Link>
             </div>
         );
+        // return (
+        //     <div className="max-w-5xl mx-auto px-4 py-10 text-center">
+        //         <h2 className="text-2xl font-semibold mb-4">No motorcycles selected</h2>
+        //         <p className="text-gray-600 mb-6">
+        //             Select up to 4 motorcycles to compare their specs side by side.
+        //         </p>
+        //         <Link
+        //             href="/motorcycles"
+        //             className="bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition"
+        //         >
+        //             Browse Motorcycles
+        //         </Link>
+        //     </div>
+        // );
     }
 
     return (

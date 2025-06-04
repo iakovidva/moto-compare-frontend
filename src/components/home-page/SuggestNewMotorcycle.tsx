@@ -60,57 +60,68 @@ export default function SuggestNewMotorcycle() {
     };
 
     return (
-        <div className="flex flex-col items-center bg-gray-900 text-white p-8 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-2">🌍 Cannot Find Your Dream Bike?</h2>
-            <p className="mb-4 text-gray-300">Let us know the model you are looking for, and we will add it soon!</p>
+        <div className="bg-gray-900 text-white p-10 md:p-12 rounded-xl shadow-lg mt-16 max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold mb-2 text-center">🏍️ Can't Find Your Bike?</h2>
+            <p className="mb-6 text-gray-300 text-center">
+                Suggest a motorcycle and we'll do our best to add it soon!
+            </p>
 
-            <form onSubmit={handleSubmit} className="flex flex-col w-full max-w-md space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
                 <select
-                    value={formData.manufacturer}
                     name="manufacturer"
-                    className="p-3 rounded-md bg-gray-800 text-white border border-gray-600 focus:ring-2 focus:ring-orange-500"
+                    value={formData.manufacturer}
                     onChange={handleChange}
+                    className="w-full p-3 rounded-md bg-gray-800 text-white border border-gray-700 focus:ring-2 focus:ring-orange-500"
                     required
                 >
-                    <option value="" disabled>Select Manufacturer</option>
+                    <option value="" disabled>
+                        Select Manufacturer
+                    </option>
                     {ManufacturerEnum.options.map((name) => (
                         <option key={name} value={name}>
                             {name}
                         </option>
                     ))}
                 </select>
+
                 <input
                     type="text"
                     name="model"
-                    placeholder="Model"
+                    placeholder="Model (e.g. Street Triple)"
                     value={formData.model}
                     onChange={handleChange}
-                    className="p-3 rounded-md bg-gray-800 text-white border border-gray-600 focus:ring-2 focus:ring-orange-500"
+                    className="w-full p-3 rounded-md bg-gray-800 text-white border border-gray-700 focus:ring-2 focus:ring-orange-500"
                     required
                 />
+
                 <input
                     type="text"
                     name="yearRange"
-                    placeholder="Year Range (e.g. 2015-2022)"
+                    placeholder="Year Range (e.g. 2017–2024)"
                     value={formData.yearRange}
                     onChange={handleChange}
-                    className="p-3 rounded-md bg-gray-800 text-white border border-gray-600 focus:ring-2 focus:ring-orange-500"
+                    className="w-full p-3 rounded-md bg-gray-800 text-white border border-gray-700 focus:ring-2 focus:ring-orange-500"
                     required
                 />
+
                 <button
                     type="submit"
-                    className="p-3 bg-orange-600 hover:bg-orange-700 rounded-md text-white font-semibold transition"
+                    disabled={loading}
+                    className={`w-full py-3 rounded-md font-semibold transition ${loading
+                            ? "bg-orange-400 cursor-not-allowed"
+                            : "bg-orange-600 hover:bg-orange-700"
+                        }`}
                 >
-                    Suggest Motorcycle
+                    {loading ? "Submitting..." : "Suggest Motorcycle"}
                 </button>
             </form>
 
             {submitted && (
-                <p className="mt-4 text-green-400 text-sm">✅ Your request has been submitted!</p>
+                <p className="mt-4 text-green-400 text-center">✅ Thanks! Your suggestion has been received.</p>
             )}
 
             {error && (
-                <p className="mt-4 text-red-500">{error}</p>
+                <p className="mt-4 text-red-400 text-center">{error}</p>
             )}
         </div>
     );
