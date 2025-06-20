@@ -1,4 +1,6 @@
 import { JwtPayload } from "@/models/JwtPayload";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080/api";
 
@@ -37,3 +39,8 @@ export const validatePassword = (pass: string) => {
   if (!/\d/.test(pass)) return 'Password must contain at least one number';
   return '';
 };
+
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}

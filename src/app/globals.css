@@ -1,7 +1,64 @@
 @import "tailwindcss";
 
-@theme {
-    --color-background-color: #F5F5F5;
-    --color-popular-motorcycles-background-color: #D97904;
+:root {
+  --background: #ffffff;
+  --foreground: #020617;
+  --muted: 	#f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #1e293b;
+  --accent-foreground: #f8fafc;
+  --border: #e2e8f0;
 }
 
+.dark {
+  --background: #020617;
+  --foreground: #f8fafc;
+  --muted: 	#1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #F1F5F9;
+  --accent-foreground: 	#0f172a;
+  --border: #1e293b;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+}
+
+@layer utilities {
+  .text-foreground {
+    color: var(--foreground);
+  }
+
+  .text-muted-foreground {
+    color: var(--muted-foreground);
+  }
+
+  .bg-background {
+    background-color: var(--background);
+  }
+
+  .bg-muted {
+    background-color: var(--muted);
+    opacity: 50;
+  }
+
+  .hover\:text-foreground:hover {
+    color: var(--foreground);
+  }
+
+  .hover\:text-accent-foreground:hover {
+    color: var(--accent-foreground);
+  }
+
+  .hover\:bg-accent:hover {
+    background-color: var(--accent-foreground);
+  }
+  
+}
