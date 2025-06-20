@@ -25,7 +25,6 @@ export async function fetchOpenRequests() {
     }
 }
 
-
 export async function addMotorcycleRequest(data: AddMotorcycleRequestModel) {
     try {
         const response = await fetchWithAuth(`${API_BASE_URL}/motorcycles/requests`, {
@@ -61,7 +60,28 @@ export async function reportIncorrectSpec(data: IncorrectSpecReportModel) {
             console.error(`HTTP error! Status: ${response.status} and ${response.statusText}`);
             return null;
         }
-        console.log("Request sented :) ");
+        return {"message": "submitted"};
+
+    } catch (error) {
+        console.error('Error fetching open requests:', error);
+        return null;
+    }
+}
+
+export async function submitFeedbackRequest(data: any) {
+    try {
+        const response = await fetchWithAuth(`${API_BASE_URL}/motorcycles/feedback`, {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            console.error(`HTTP error! Status: ${response.status} and ${response.statusText}`);
+            return null;
+        }
         return {"message": "submitted"};
 
     } catch (error) {
