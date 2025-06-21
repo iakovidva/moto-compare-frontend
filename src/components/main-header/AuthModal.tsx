@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react';
 import { login, registerUser } from '@/lib/api/auth';
 import { validatePassword } from '@/lib/utils';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../ui/dialog';
+import { Button } from '../ui/button';
+import { Label } from '../ui/label';
 
 type FormState = {
     username: string;
@@ -11,8 +14,15 @@ type FormState = {
     confirmPassword: string;
 };
 
-export default function AuthModal({ isOpen, onClose, message }: { isOpen: boolean, onClose: () => void, message?: string }) {
-    const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
+interface AuthModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    initialMode?: 'login' | 'register';
+    message?: string
+}
+
+export default function AuthModal({ isOpen, onClose, initialMode = 'login', message }: AuthModalProps) {
+    const [mode, setMode] = useState<'login' | 'register'>(initialMode);
     const [errors, setErrors] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -28,16 +38,20 @@ export default function AuthModal({ isOpen, onClose, message }: { isOpen: boolea
         setForm((prev) => ({ ...prev, [name]: value }));
     };
 
+    const toggleMode = () => {
+        setMode(mode === 'login' ? 'register' : 'login');
+    };
+
     useEffect(() => {
-        if (activeTab === 'register' && form.password) {
+        if (mode === 'register' && form.password) {
             setErrors(validatePassword(form.password));
         }
-    }, [form.password, activeTab]);
+    }, [form.password, mode]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (activeTab === 'register') {
+        if (mode === 'register') {
             const error = validatePassword(form.password) || (form.password !== form.confirmPassword && 'Passwords do not match');
             if (error) {
                 setErrors(error);
@@ -46,7 +60,7 @@ export default function AuthModal({ isOpen, onClose, message }: { isOpen: boolea
         }
 
         setIsSubmitting(true);
-        const action = activeTab === "login" ? () => login(form.email, form.password) : () => registerUser(form.username, form.email, form.password);
+        const action = mode === "login" ? () => login(form.email, form.password) : () => registerUser(form.username, form.email, form.password);
 
         try {
             await action();
@@ -61,119 +75,106 @@ export default function AuthModal({ isOpen, onClose, message }: { isOpen: boolea
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
-            <div className="bg-gray-800 p-6 rounded-lg w-full max-w-md border border-gray-700 relative">
-                {/* Close button */}
-                <button
-                    onClick={onClose}
-                    className="absolute top-3 right-3 text-gray-400 hover:text-white transition"
-                    disabled={isSubmitting}
-                >
-                    ✕
-                </button>
-
-                {/* Optional Message */}
-                {message && (
-                    <div className="m-2 text-sm text-center text-white bg-blue-500/20 border border-blue-400 rounded p-3">
-                        {message}
-                    </div>
-                )}
-
-                {/* Tabs */}
-                <div className="flex justify-center space-x-6 mb-6 border-b border-gray-700 pb-2">
-                    {["login", "register"].map((tab) => (
-                        <button
-                            key={tab}
-                            onClick={() => setActiveTab(tab as "login" | "register")}
-                            className={`text-lg font-semibold pb-1 ${activeTab === tab
-                                ? "text-white border-b-2 border-blue-500"
-                                : "text-gray-400 hover:text-white"
-                                }`}
-                        >
-                            {tab === "login" ? "Login" : "Register"}
-                        </button>
-                    ))}
-                </div>
-
-                {/* Form */}
-                <form onSubmit={handleSubmit} className="space-y-5">
-                    {activeTab === "register" && (
-                        <FormInputField
-                            name="username"
-                            label="Username"
-                            value={form.username}
-                            onChange={handleInputChange}
-                            disabled={isSubmitting}
-                        />
+        <Dialog open={isOpen} onOpenChange={onClose}>
+            <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                    <DialogTitle>
+                        {message && (
+                            <div className="p-4 rounded-3xl border-b bg-muted mb-8">
+                                <p className="text-center text-sm text-foreground">
+                                    {message}
+                                </p>
+                            </div>
+                        )}
+                        {mode === 'login' ? 'Welcome Back' : 'Create Account'}
+                    </DialogTitle>
+                </DialogHeader>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    {mode === 'register' && (
+                        <div className="space-y-2">
+                            <Label htmlFor="username">Username</Label>
+                            <input
+                                id="username"
+                                name="username"
+                                type="text"
+                                value={form.username}
+                                onChange={handleInputChange}
+                                required
+                                placeholder="Enter your username"
+                                className="w-full p-3 rounded-md bg-muted text-foreground border focus:ring-2 focus:ring-orange-500"
+                            />
+                        </div>
                     )}
 
-                    <FormInputField
-                        name="email"
-                        label="Email"
-                        type="email"
-                        value={form.email}
-                        onChange={handleInputChange}
-                        disabled={isSubmitting}
-                    />
-
-                    <FormInputField
-                        name="password"
-                        label="Password"
-                        type="password"
-                        value={form.password}
-                        onChange={handleInputChange}
-                        disabled={isSubmitting}
-                    />
-
-                    {activeTab === "register" && (
-                        <FormInputField
-                            name="confirmPassword"
-                            label="Confirm Password"
-                            type="password"
-                            value={form.confirmPassword}
+                    <div className="space-y-2">
+                        <Label htmlFor="email">Email</Label>
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            value={form.email}
                             onChange={handleInputChange}
-                            disabled={isSubmitting}
+                            required
+                            placeholder="Enter your email"
+                            className="w-full p-3 rounded-md bg-muted text-foreground border focus:ring-2 focus:ring-orange-500"
                         />
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="password">Password</Label>
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            value={form.password}
+                            onChange={handleInputChange}
+                            required
+                            placeholder="Enter your password"
+                            className="w-full p-3 rounded-md bg-muted text-foreground border focus:ring-2 focus:ring-orange-500"
+                        />
+                    </div>
+
+                    {mode === "register" && (
+                        <div className="space-y-2">
+                            <Label htmlFor="confirmPassword">Confirm Password</Label>
+                            <input
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                type="password"
+                                value={form.confirmPassword}
+                                onChange={handleInputChange}
+                                required
+                                placeholder="Enter your password"
+                                className="w-full p-3 rounded-md bg-muted text-foreground border focus:ring-2 focus:ring-orange-500"
+                            />
+                        </div>
                     )}
 
                     {errors && <p className="text-red-400 text-sm">{errors}</p>}
 
-                    <button
+                    <Button
                         type="submit"
+                        className="w-full bg-orange-500 hover:bg-orange-600"
                         disabled={isSubmitting}
-                        className={`w-full py-2 px-4 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold transition ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""
-                            }`}>
-                        {isSubmitting ? "Processing..." : activeTab === "login" ? "Login" : "Register"}
-                    </button>
+                    >
+                        {isSubmitting ? 'Please wait...' : mode === 'login' ? 'Sign In' : 'Create Account'}
+                    </Button>
+
+                    <div className="text-center">
+                        <Button
+                            type="button"
+                            variant="link"
+                            onClick={toggleMode}
+                            className="text-sm"
+                        >
+                            {mode === 'login'
+                                ? "Don't have an account? Sign up"
+                                : "Already have an account? Sign in"
+                            }
+                        </Button>
+                    </div>
                 </form>
-            </div>
-        </div>
-    );
-}
-
-type FormInputFieldProps = {
-    name: keyof FormState;
-    label: string;
-    type?: string;
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    disabled: boolean;
-}
-
-const FormInputField = ({ name, label, type = "text", value, onChange, disabled }: FormInputFieldProps) => {
-    return (
-        <div>
-            <label className="block text-sm text-white font-medium text-left mb-1">{label}</label>
-            <input
-                id={name}
-                name={name}
-                type={type}
-                value={value}
-                onChange={onChange}
-                disabled={disabled}
-                required
-                className="w-full px-3 py-2 bg-gray-700 rounded text-white focus:ring-2 focus:ring-blue-500"
-            />
-        </div>
+            </DialogContent>
+        </Dialog>
     );
 }

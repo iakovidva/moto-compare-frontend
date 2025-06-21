@@ -5,22 +5,24 @@ import MobileNav from "./MobileNav";
 const MainNavigation: React.FC = () => {
 
     return (
-        <nav className="bg-gray-900 text-white p-4 md:p-8">
-            <div className="container mx-auto flex justify-between items-center">
-                <Logo />
-                <DesktopNav />
-                <MobileNav />
+        <nav className="bg-muted border-b sticky top-0 z-50 shadow-md">
+            <div className="container mx-auto px-4">
+                <div className="flex justify-between items-center h-16">
+                    <Logo />
+                    <DesktopNav />
+                    <MobileNav />
+                </div>
             </div>
         </nav >
     );
 }
 
 const Logo = () => (
-    <div className="w-48 flex-shrink-0">
-        <Link href="/" className="text-2xl font-bold">
+    <Link href="/" className="flex items-center space-x-2">
+        <span className="text-xl font-bold text-foreground">
             MotoCompare
-        </Link>
-    </div>
+        </span>
+    </Link>
 );
 
 export default MainNavigation;
