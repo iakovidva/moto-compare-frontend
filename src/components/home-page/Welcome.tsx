@@ -1,12 +1,16 @@
 const Welcome: React.FC = () => {
     return (
-        <section className="text-center py-16 px-4 bg-gradient-to-b from-gray-900 to-gray-800 text-white">
-            <h1 className="text-5xl font-extrabold tracking-tight">
-                Welcome to <span className="text-orange-500">MotoCompare</span>
-            </h1>
-            <p className="mt-4 text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
-                Your one-stop platform to compare motorcycles and choose your next two-wheeled adventure with confidence.
-            </p>
+        <section className="py-8 md:py-16 border-t">
+            <div className="container mx-auto px-4 text-center">
+                <h2 className="text-2xl md:text-4xl font-bold mb-4 md:mb-6 text-foreground">
+                    Welcome to MotoCompare
+                </h2>
+                <p className="text-base md:text-xl mb-6 md:mb-8 max-w-3xl mx-auto text-muted-foreground">
+                    The ultimate platform for motorcycle enthusiasts. Compare specifications,
+                    read reviews, and find your perfect ride with our comprehensive database
+                    of motorcycles from all major manufacturers.
+                </p>
+            </div>
         </section>
     );
 };

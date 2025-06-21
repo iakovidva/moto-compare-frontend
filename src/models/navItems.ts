@@ -4,9 +4,10 @@ export type NavItem = {
   };
   
   export const navItems: NavItem[] = [
-    { label: "Motorcycles", path: "/motorcycles" },
+    { label: "Home", path: "/" },
+    { label: "Browse", path: "/motorcycles" },
     { label: "Compare", path: "/compare" },
-    { label: "About", path: "/about" },
-    { label: "Submit Request", path: "/submit" }
+    { label: "Submit Request", path: "/submit" },
+    { label: "About", path: "/about" }
   ];
   
