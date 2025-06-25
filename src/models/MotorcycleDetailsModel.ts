@@ -57,17 +57,4 @@ export interface MotorcycleDetailsModel extends MotorcycleSummary {
 
     // Related motorcycles
     similarMotorcycles: MotorcycleSummary[];
-
-    // Reviews
-    reviews: ReviewResponse[];
-    averageRating: number;
-    numberOfReviews: number;
-}
-
-export interface ReviewResponse {
-    userName: string;
-    motorcycleId: string;
-    rating: number;
-    comment: string;
-    createdAt: string;
 }
