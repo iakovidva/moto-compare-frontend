@@ -23,7 +23,7 @@ export default function FavoritesPreview() {
                     <MotorcycleCard
                         key={bike.id}
                         motorcycle={bike}
-                        actionSlot={<FavoriteToggleButton bike={bike} />}
+                        actionSlot={<FavoriteToggleButton bike={bike} compact />}
                     />
                 ))}
             </ul>

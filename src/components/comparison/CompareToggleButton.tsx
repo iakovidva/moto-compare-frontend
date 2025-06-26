@@ -2,6 +2,7 @@
 
 import { useCompareStore } from "@/store/compareStore";
 import { MotorcycleSummary } from "@/models/MotorcycleSummary";
+import { Button } from "../ui/button";
 
 type Props = {
     bike: MotorcycleSummary;
@@ -20,14 +21,15 @@ export default function CompareToggleButton({ bike, compact = false }: Props) {
     };
 
     return (
-        <button
+        <Button
             onClick={handleClick}
-            className={`transition font-medium rounded ${isSelected
-                ? "text-red-500 hover:underline"
-                : "text-blue-600 hover:underline"
-                } ${compact ? "text-sm px-2 py-1" : "text-base px-3 py-2"}`}
+            size="sm"
+            className={`w-full py-1.5 ${isSelected
+                ? 'bg-red-600 hover:bg-red-700 text-white'
+                : 'bg-orange-500 hover:bg-orange-600 text-white'
+                }${compact ? "text-xs h-7" : "text-base px-3 py-2"}`}
         >
             {isSelected ? "✕ Remove" : "+ Compare"}
-        </button>
+        </Button>
     );
 }

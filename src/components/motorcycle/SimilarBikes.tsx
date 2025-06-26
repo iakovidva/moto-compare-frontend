@@ -11,40 +11,59 @@ export default function SimilarBikes({ similarBikes }: SimilarBikesProps) {
     if (!similarBikes || similarBikes.length === 0) return null;
 
     return (
-        <>
-            <h3 className="text-xl font-semibold mb-4">Similar Bikes</h3>
+        <div className="bg-background rounded-lg shadow-lg p-6">
+            <h2 className="text-2xl font-bold text-foreground mb-6">
+                Similar Motorcycles
+            </h2>
 
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
                 {similarBikes.map((bike) => (
-                    <div key={bike.id} className="flex flex-wrap justify-between items-center">
-                        <div className="grow">
-                            <Link
-                                key={bike.id}
-                                href={`/motorcycles/${bike.id}`}
-                                className="block bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition"
-                            >
-                                <div className="flex items-center space-x-4">
-                                    <div className="w-20 h-16 relative">
-                                        <Image
-                                            src={bike.image}
-                                            alt={bike.model}
-                                            fill
-                                            className="object-cover rounded"
-                                        />
-                                    </div>
-                                    <div>
-                                        <p className="font-semibold">{bike.model}</p>
-                                        <p className="text-sm text-gray-500">{bike.manufacturer}</p>
-                                    </div>
+                    <div
+                        key={bike.id}
+                        className="bg-muted border border-border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+                    >
+                        <Link href={`/motorcycles/${bike.id}`}>
+                            <div className="h-32 relative flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity">
+                                <Image
+                                    src={bike.image}
+                                    alt={bike.model}
+                                    fill
+                                    className="object-cover rounded"
+                                />
+                            </div>
+                        </Link>
+
+                        <div className="p-3">
+                            <div className="flex items-start justify-between mb-2">
+                                <div className="flex-1 min-w-0">
+                                    <h3 className="font-bold text-sm text-foreground truncate">
+                                        {bike.model}
+                                    </h3>
+                                    <p className="text-xs text-muted-foreground truncate">
+                                        {bike.manufacturer} • {bike.yearRange}
+                                    </p>
                                 </div>
-                            </Link>
-                        </div>
-                        <div>
+                            </div>
+
+                            <div className="space-y-1 mb-3">
+                                <div className="flex justify-between text-xs">
+                                    <span className="text-muted-foreground">Engine:</span>
+                                    <span className="font-medium text-foreground text-right">
+                                        {bike.displacement}
+                                    </span>
+                                </div>
+                                <div className="flex justify-between text-xs">
+                                    <span className="text-muted-foreground">Horsepower:</span>
+                                    <span className="font-medium text-foreground text-right">
+                                        {bike.horsePower}
+                                    </span>
+                                </div>
+                            </div>
                             <CompareToggleButton bike={bike} compact />
                         </div>
                     </div>
                 ))}
             </div>
-        </>
+        </div>
     );
 }

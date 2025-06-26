@@ -7,14 +7,16 @@ import { useParams } from "next/navigation";
 import { IncorrectSpecReportModel } from "@/models/IncorrectSpecRequestModel";
 import { SpecCard } from "./SpecCard";
 import { reportIncorrectSpec } from "@/lib/api/requests";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import { Button } from "../ui/button";
 
 interface ReportIncorrectSpecProps {
     bike: MotorcycleDetailsModel;
 }
 
-
 const ReportIncorrectSpec = ({ bike }: ReportIncorrectSpecProps) => {
-    const [open, setOpen] = useState(false);
+    const [showReportModal, setShowReportModal] = useState(false);
+
     const [checkedSpecs, setCheckedSpecs] = useState(new Set<string>());
     const [updatedSpecs, setUpdatedSpecs] = useState<Record<string, string>>({});
     const params = useParams();
@@ -22,7 +24,6 @@ const ReportIncorrectSpec = ({ bike }: ReportIncorrectSpecProps) => {
 
     const motoSpecs = groupedMotoSpecs(bike);
 
-    // Handle checking/unchecking a spec
     const toggleSpec = (spec: string) => {
         setCheckedSpecs((prev) => {
             const newSet = new Set(prev);
@@ -30,7 +31,7 @@ const ReportIncorrectSpec = ({ bike }: ReportIncorrectSpecProps) => {
                 newSet.delete(spec);
                 setUpdatedSpecs((prevSpecs) => {
                     const newSpecs = { ...prevSpecs };
-                    delete newSpecs[spec]; // Remove from updates
+                    delete newSpecs[spec];
                     return newSpecs;
                 });
             } else {
@@ -44,12 +45,10 @@ const ReportIncorrectSpec = ({ bike }: ReportIncorrectSpecProps) => {
         });
     };
 
-    // Handle value change
     const handleChange = (spec: string, value: string) => {
         setUpdatedSpecs((prev) => ({ ...prev, [spec]: value }));
     };
 
-    // Handle submission
     const handleSubmit = () => {
         const report = Object.entries(updatedSpecs).map(([key, newValue]) => ({
             field: key,
@@ -63,52 +62,71 @@ const ReportIncorrectSpec = ({ bike }: ReportIncorrectSpecProps) => {
         };
 
         reportIncorrectSpec(requestBody);
-        console.log("Report Submitted:", requestBody);
-        setOpen(false);
+        setShowReportModal(false);
     };
 
+    const onClose = () => {
+        setShowReportModal(false);
+    }
     return (
+
         <>
-            <button
-                className="flex items-center justify-center space-x-2 bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 transition"
-                onClick={() => setOpen(true)}
-            >
-                <span className="text-2xl">⚠️</span>
-                <span className="font-medium">Report Incorrect Spec</span>
-            </button>
+            <div className="mt-6 pt-6 border-t border-border">
+                <Button
+                    onClick={() => setShowReportModal(true)}
+                    variant="outline"
+                    size="sm"
+                    className="border-orange-500 text-orange-500 hover:bg-accent text-sm"
+                >
+                    <span className="text-foreground">⚠️  Report Wrong Values</span>
+                </Button>
+            </div>
 
-            {open && (
-                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 max-h-[80vh] overflow-y-auto">
-                        <div className="flex justify-between items-center border-b pb-3">
-                            <h2 className="text-xl font-semibold">Report Incorrect Specifications</h2>
-                            <button className="text-gray-500 hover:text-gray-700" onClick={() => setOpen(false)}>✖</button>
-                        </div>
 
-                        <p className="text-gray-600 mb-4 mt-2">Check the values that are incorrect and suggest the correct ones.</p>
+            <Dialog open={showReportModal} onOpenChange={onClose}>
+                <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                            ⚠️  Report Wrong Values
+                        </DialogTitle>
+                    </DialogHeader>
 
-                        <div className="columns-2 space-y-6">
-                            {Object.entries(motoSpecs).map(([category, fields]) => (
-                                <SpecCard
-                                    key={category}
-                                    category={category}
-                                    fields={fields}
-                                    isEditable={true}
-                                    checkedSpecs={checkedSpecs}
-                                    updatedSpecs={updatedSpecs}
-                                    onToggle={toggleSpec}
-                                    onChange={handleChange}
-                                />
-                            ))}
-                        </div>
+                    <p className="text-gray-600 mb-4 mt-2">Check the values that are incorrect and suggest the correct ones.</p>
 
-                        <div className="flex justify-end space-x-3 mt-4">
-                            <button className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400" onClick={() => setOpen(false)}>Cancel</button>
-                            <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onClick={handleSubmit}>Submit Report</button>
-                        </div>
+                    <div className="columns-2 space-y-6 text-foreground">
+                        {Object.entries(motoSpecs).map(([category, fields]) => (
+                            <SpecCard
+                                key={category}
+                                category={category}
+                                fields={fields}
+                                isEditable={true}
+                                checkedSpecs={checkedSpecs}
+                                updatedSpecs={updatedSpecs}
+                                onToggle={toggleSpec}
+                                onChange={handleChange}
+                            />
+                        ))}
                     </div>
-                </div>
-            )}
+
+                    <div className="flex gap-3 pt-4">
+                        <Button
+                            type="button"
+                            onClick={onClose}
+                            variant="outline"
+                            className="hover:text-foreground"
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            type="submit"
+                            onClick={handleSubmit}
+                            className="bg-orange-500 hover:bg-orange-600 text-white flex-1"
+                        >
+                            Submit Report
+                        </Button>
+                    </div>
+                </DialogContent>
+            </Dialog>
         </>
     );
 };

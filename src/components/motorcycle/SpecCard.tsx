@@ -22,7 +22,7 @@ export const SpecCard = ({
     onToggle,
     onChange,
 }: SpecCardProps) => (
-    <div className="self-start bg-gray-100 rounded-xl shadow-md overflow-hidden">
+    <div className="self-start rounded-xl shadow-md overflow-hidden">
         {/* Card Header */}
         <div className="flex items-center space-x-2 px-4 py-3 bg-gradient-to-r from-red-600 to-orange-500 text-white">
             {categoryIcons[category] || defaultIcon}
@@ -47,11 +47,11 @@ export const SpecCard = ({
                                             onChange={() => onToggle?.(key)}
                                             className="w-4 h-4 mr-2"
                                         />
-                                        <span className="text-sm text-gray-700">{formatLabel(key)}:</span>
+                                        <span className="text-sm text-foreground">{formatLabel(key)}:</span>
                                     </div>
                                     <input
                                         type="text"
-                                        className={`mt-1 w-full border rounded px-2 py-1 ${isChecked ? "bg-white" : "bg-gray-100"
+                                        className={`mt-1 w-full border rounded px-2 py-1 ${isChecked ? "bg-muted" : "bg-background"
                                             }`}
                                         value={fieldValue}
                                         onChange={(e) => onChange?.(key, e.target.value)}
@@ -60,8 +60,8 @@ export const SpecCard = ({
                                 </>
                             ) : (
                                 <div className="flex justify-between border-b pb-1 text-gray-800">
-                                    <span className="text-sm text-gray-700">{formatLabel(key)}:</span>
-                                    <span className="font-medium">
+                                    <span className="text-sm text-foreground">{formatLabel(key)}:</span>
+                                    <span className="font-medium text-foreground">
                                         {typeof field === "boolean" ? (field ? "Yes" : "No") : String(field)}
                                     </span>
                                 </div>

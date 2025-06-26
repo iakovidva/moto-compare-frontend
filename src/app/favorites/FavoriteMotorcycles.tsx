@@ -32,12 +32,12 @@ export default function FavoriteMotorcycles() {
     }
 
     return (
-        <ul className="grid grid-cols-3 lg:grid-cols-4 gap-4">
+        <ul className="flex flex-wrap justify-center gap-2">
 
             {favorites.map((bike) => (
-                <li key={bike.id}>
+                <li key={bike.id} >
                     <MotorcycleCard motorcycle={bike}
-                        actionSlot={<FavoriteToggleButton bike={bike} />}
+                        actionSlot={<FavoriteToggleButton bike={bike} compact />}
                     />
                 </li>
             ))}

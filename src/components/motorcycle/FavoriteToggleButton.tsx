@@ -1,12 +1,17 @@
+"use client"
+
 import { useAddFavorite, useFavoriteMotorcycles, useRemoveFavorite } from "@/hooks/useFavoriteMotorcycles";
 import { MotorcycleSummary } from "@/models/MotorcycleSummary";
 import { useAuthStore } from "@/store/authStore";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import toast from 'react-hot-toast';
+import AuthModal from "../main-header/AuthModal";
+import { Button } from "../ui/button";
 
-export default function FavoriteToggleButton({ bike, onRequireAuth }: { bike: MotorcycleSummary, onRequireAuth?: () => void }) {
+export default function FavoriteToggleButton({ bike, compact = false }: { bike: MotorcycleSummary, compact?: boolean }) {
 
     const { accessToken } = useAuthStore();
+    const [authModalOpen, setAuthModalOpen] = useState(false);
 
     const { data: favorites = [] } = useFavoriteMotorcycles();
     const { mutateAsync: addFavorite } = useAddFavorite(bike.id);
@@ -18,7 +23,7 @@ export default function FavoriteToggleButton({ bike, onRequireAuth }: { bike: Mo
     );
     const handleFavoriteClick = async () => {
         if (!accessToken) {
-            onRequireAuth?.();
+            setAuthModalOpen(true);
             return;
         }
         try {
@@ -35,14 +40,36 @@ export default function FavoriteToggleButton({ bike, onRequireAuth }: { bike: Mo
     }
 
     return (
-        <button onClick={handleFavoriteClick}
-            className="flex items-center justify-center space-x-2 bg-white p-3 rounded-lg shadow-sm hover:bg-gray-200 transition">
-            <span className={`text-2xl ${isFavorite ? "text-gray-400" : "text-red-500"}`}>
-                {isFavorite ? "💔" : "❤️"}
-            </span>
-            <span className="font-medium">
-                {isFavorite ? "Remove Favorite" : "Favorite"}
-            </span>
-        </button>
+        <>
+            {authModalOpen && (
+                <AuthModal
+                    isOpen={authModalOpen}
+                    onClose={() => setAuthModalOpen(false)}
+                    message="❤️ Please log in or create an account to save bikes to your favorites!"
+                />
+            )}
+
+            {compact ?
+                <Button
+                    variant="outline"
+                    className="py-2 px-3 text-xs h-7"
+                    onClick={handleFavoriteClick}
+                >
+                    <span className={`text-xl mr-1 ${isFavorite ? "text-red-500" : "text-gray-400"}`}>
+                        {isFavorite ? "♡" : "❤️"}
+                    </span>
+                    {isFavorite ? "Remove" : "Save"}
+                </Button>
+                :
+                <Button variant="outline" className="w-full py-2 md:py-3 text-sm md:text-base" onClick={handleFavoriteClick}>
+                    <span className={`text-2xl ${isFavorite ? "text-gray-400" : "text-red-500"}`}>
+                        {isFavorite ? "💔" : "❤️"}
+                    </span>
+                    <span className="font-medium">
+                        {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+                    </span>
+                </Button>
+            }
+        </>
     );
 }
