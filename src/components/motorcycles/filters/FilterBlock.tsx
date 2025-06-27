@@ -5,9 +5,9 @@ type FilterBlockProps = {
 };
 
 const FilterBlock = ({ label, children, onClear }: FilterBlockProps) => (
-    <div className="mb-4 p-4 bg-white border border-gray-400 rounded-xl shadow-sm">
+    <div className="mb-4 p-2 border border-gray-400 rounded-xl shadow-sm bg-background">
         <div className="flex justify-between items-center mb-2">
-            <h3 className="text-sm font-semibold text-gray-700">{label}</h3>
+            <h3 className="text-sm font-semibold text-foreground">{label}</h3>
             {onClear && (
                 <button
                     onClick={onClear}

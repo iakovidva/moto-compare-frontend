@@ -18,11 +18,11 @@ const PopularManufacturers = ({ onSelect, selected }: PopularManufacturersProps)
     if (isLoading || !manufacturers) return <p>Loading manufacturers...</p>;
 
     return (
-        <div className="mb-8 text-center">
+        <div className="my-6 text-center">
             <h2 className="text-xl font-semibold mb-4">Popular Manufacturers</h2>
             <div className="flex flex-wrap justify-center gap-2">
                 {manufacturers!.map((manufacturer) => {
-                    const isSelected = selected === manufacturer.name;
+                    const isSelected = selected === manufacturer.name; //TODO doesn't work.
 
                     return (
                         <button
@@ -30,8 +30,8 @@ const PopularManufacturers = ({ onSelect, selected }: PopularManufacturersProps)
                             onClick={() => onSelect(manufacturer.name)}
                             className={`flex flex-col items-center w-[80px] p-2 rounded-xl border transition duration-200 shadow-sm
                   ${isSelected
-                                    ? "bg-blue-600 text-white border-blue-600"
-                                    : "bg-white hover:shadow-md hover:border-blue-300"}
+                                    ? "bg-muted text-green-800 border-blue-600"
+                                    : "bg-muted hover:shadow-lg hover:border-orange-600"}
                 `}
                         >
                             <div className="relative w-[50px] h-[50px] mb-2">
@@ -44,7 +44,7 @@ const PopularManufacturers = ({ onSelect, selected }: PopularManufacturersProps)
                                 />
                             </div>
                             {manufacturer.count !== undefined && (
-                                <span className={`text-xs ${isSelected ? "text-blue-100" : "text-gray-500"}`}>
+                                <span className="text-xs">
                                     ({manufacturer.count})
                                 </span>
                             )}

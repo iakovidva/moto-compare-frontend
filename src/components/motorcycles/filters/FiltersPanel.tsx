@@ -26,8 +26,8 @@ const FiltersPanel = ({ category, manufacturer, horsePowerMin, horsePowerMax, di
     };
 
     return (
-        <div className="p-1">
-            <div className="flex flex-row justify-between mb-4">
+        <div className="rounded-lg shadow-lg p-1 sticky top-6 bg-background">
+            <div className="flex flex-row justify-between mb-4 bg-background">
                 <h2 className="text-xl font-bold">Filters</h2>
                 {(manufacturer || category) && (
                     <button

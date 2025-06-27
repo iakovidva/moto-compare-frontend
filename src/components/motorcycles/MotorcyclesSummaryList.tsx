@@ -42,12 +42,12 @@ const MotorcyclesSummaryList: React.FC<Props> = ({ motorcycles }) => {
     const totalPages = data?.totalPages || 0;
 
     return (
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="max-w-8xl mx-auto px-2">
             <MotorcycleSearch />
             <PopularManufacturers onSelect={(name) => setFilters({ manufacturer: name })} />
 
-            <div className="grid grid-cols-12 gap-8 mt-4">
-                <div className="h-fit hidden lg:block col-span-12 lg:col-span-4 xl:col-span-3 bg-gray-50 p-2 rounded-2xl shadow-sm">
+            <div className="grid grid-cols-12 gap-4 mt-4">
+                <div className="h-fit hidden lg:block col-span-12 lg:col-span-4 xl:col-span-3 p-2 rounded-2xl">
                     <FiltersPanel
                         category={category}
                         manufacturer={manufacturer}
@@ -64,7 +64,7 @@ const MotorcyclesSummaryList: React.FC<Props> = ({ motorcycles }) => {
 
                 {/* Motorcycle grid */}
                 <div className="col-span-12 lg:col-span-8 xl:col-span-9">
-                    <div className="bg-white p-4 rounded-2xl shadow-sm ">
+                    <div className="p-4 rounded-2xl shadow-sm ">
                         <TopControlsBar
                             sort={sort || ""}
                             onSortChange={(newSort) => setFilters({ sort: newSort })}
@@ -79,6 +79,7 @@ const MotorcyclesSummaryList: React.FC<Props> = ({ motorcycles }) => {
                             transition={{ duration: 0.3 }}
                         >
                             {motos.map((moto, index) => (
+                                // <MotorcycleCard key={`${moto.id}-${index}`} motorcycle={moto} />
                                 <MotorcycleCard key={`${moto.id}-${index}`} motorcycle={moto} />
                             ))}
                         </motion.div>

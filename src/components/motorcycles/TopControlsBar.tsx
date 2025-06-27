@@ -10,7 +10,7 @@ interface TopControlsProps {
 
 const TopControlsBar = ({ sort, onSortChange, pageSize, setPageSize }: TopControlsProps) => {
     return (
-        <div className="flex flex-wrap justify-between items-center bg-white p-2 rounded-2xl shadow-sm mb-6">
+        <div className="flex flex-wrap justify-between items-center border p-2 rounded-2xl shadow-sm mb-6">
             <SortDropdown selectedSort={sort} onSortChange={onSortChange} />
             <PageSizeSelector pageSize={pageSize} setPageSize={setPageSize} />
         </div>
