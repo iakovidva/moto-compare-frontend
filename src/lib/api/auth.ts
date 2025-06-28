@@ -26,8 +26,7 @@ export async function login(email: string, password: string) {
 
         setAuth(data.accessToken, jwtPayload.sub, jwtPayload.role);
     } catch (err: any) {
-        console.log("error message: " + err.message);
-        throw err;
+        throw new Error("Invalid email or password");
     }
 }
 
