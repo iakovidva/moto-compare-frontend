@@ -32,51 +32,62 @@ export default function CompareSelectionPanel() {
     return (
         <>
             {/* ✅ Desktop Panel */}
-            <div className="hidden mt-4 lg:flex sticky bottom-0 bg-white border-t shadow-md z-40 px-6 py-4 items-start gap-6 max-w-6xl w-full justify-between mx-auto">
-                {/* Motorcycle cards + placeholders */}
-                <div className="flex gap-4 overflow-x-auto max-w-[70%] items-start">
-                    {selected.map((bike) => (
-                        <div key={bike.id} className="flex flex-col items-center w-36 bg-gray-100 p-3 rounded-lg shadow-sm">
-                            <div className="relative w-full h-[60px] mb-2">
-                                <Image
-                                    src={bike.image || "/placeholder.png"}
-                                    alt={bike.model}
-                                    fill
-                                    className="object-contain rounded"
-                                    sizes="100px"
-                                />
-                            </div>
-                            <p className="text-sm font-semibold text-center">{bike.model}</p>
-                            <p className="text-xs text-gray-500 text-center">{bike.manufacturer}</p>
-                            <button
-                                onClick={() => removeFromCompare(bike.id)}
-                                className="text-xs text-red-600 mt-2 hover:underline"
-                            >
-                                Remove
-                            </button>
+            <div className="border hidden mt-8 lg:flex sticky bottom-0 bg-background shadow-md z-40 p-4 max-w-4xl w-full mx-auto rounded-xl">
+                <div className="flex flex-col w-full gap-3">
+                    {/* Header Row */}
+                    <div className="flex justify-between items-center">
+                        <h3 className="text-foreground font-semibold text-sm">
+                            Compare ({selected.length}/4)
+                        </h3>
+                        <button
+                            onClick={clearCompare}
+                            className="text-red-500 hover:text-red-600 text-sm"
+                        >
+                            Clear All
+                        </button>
+                    </div>
+
+                    {/* Content Row */}
+                    <div className="flex gap-4 items-center">
+                        {/* Motorcycle cards + placeholders */}
+                        <div className="flex gap-3 overflow-x-auto flex-1">
+                            {selected.map((bike) => (
+                                <div key={bike.id} className="flex flex-col items-center w-36 shadow-sm bg-muted rounded-lg p-2 relative">
+                                    <button
+                                        onClick={() => removeFromCompare(bike.id)}
+                                        className="absolute top-1 right-1 text-red-500 hover:text-red-600"
+                                    >
+                                        x
+                                    </button>
+                                    <p className="text-sm font-semibold text-center">{bike.model} </p>
+                                    <p className="text-xs text-muted-foreground text-center">{bike.manufacturer}</p>
+                                    <p className="text-xs text-muted-foreground text-center">{bike.yearRange}</p>
+                                </div>
+                            ))}
+
+                            <AddBikePlaceholder
+                                placeholders={placeholders}
+                                handleAddClick={handleAddClick}
+                                classes="w-36 h-[4.5rem] flex-shrink-0"
+                            />
                         </div>
-                    ))}
 
-                    <AddBikePlaceholder classes="w-36" placeholders={placeholders} handleAddClick={handleAddClick} />
-                </div>
-
-                {/* Actions */}
-                <div className="flex flex-col items-end gap-2">
-                    <CompareNowButton selected={selected} />
-                    <ClearAllButton clear={clearCompare} />
+                        {/* Compare Button */}
+                        <CompareNowButton selected={selected} />
+                    </div>
                 </div>
             </div>
 
             {/* ✅ Mobile Floating Button */}
             <button
-                className="fixed sticky bottom-4 left-4 z-50 bg-blue-600 text-white my-4 px-5 py-3 flex items-center justify-center rounded-full shadow-lg lg:hidden"
+                className="fixed sticky bottom-4 left-4 z-50 bg-orange-600 text-white my-4 px-5 py-3 flex items-center justify-center rounded-full shadow-lg lg:hidden"
                 onClick={() => setIsOpen(true)}
             >
                 Compare ({selected.length})
             </button>
 
             {/* ✅ Mobile Bottom Sheet */}
-            <Transition show={isOpen} as={Fragment}>
+            <Transition show={isOpen && selected.length > 1} as={Fragment}>
                 <Dialog as="div" className="relative z-50 lg:hidden" onClose={setIsOpen}>
                     <TransitionChild
                         as={Fragment}
@@ -100,39 +111,32 @@ export default function CompareSelectionPanel() {
                             leaveFrom="translate-y-0"
                             leaveTo="translate-y-full"
                         >
-                            <DialogPanel className="w-full bg-white rounded-t-2xl p-4  overflow-y-auto">
+                            <DialogPanel className="w-full bg-background rounded-t-2xl p-4 overflow-y-auto">
                                 <div className="flex justify-between items-center mb-4">
                                     <h2 className="text-lg font-semibold">Selected Motorcycles</h2>
-                                    <button onClick={() => setIsOpen(false)} className="text-sm text-gray-500">
+                                    <button onClick={() => setIsOpen(false)} className="text-sm text-muted-foreground">
                                         ✕
                                     </button>
                                 </div>
 
-                                <div className="flex flex-wrap justify-center gap-4">
+                                <div className="grid grid-flow-col grid-rows-2 justify-center gap-4">
                                     {selected.map((bike) => (
-                                        <div
-                                            key={bike.id}
-                                            className="w-32 bg-gray-100 rounded-lg p-3 flex flex-col items-center shadow-sm"
-                                        >
-                                            <div className="relative w-full h-[80px] mb-2">
-                                                <Image
-                                                    src={bike.image || "/placeholder.png"}
-                                                    alt={bike.model}
-                                                    fill
-                                                    className="object-contain rounded"
-                                                />
-                                            </div>
-                                            <p className="text-sm font-semibold text-center">{bike.model}</p>
-                                            <p className="text-xs text-gray-500 text-center mb-2">{bike.manufacturer}</p>
+                                        <div key={bike.id} className="flex flex-col items-center w-36 shadow-sm bg-muted rounded-lg p-2 relative">
                                             <button
-                                                className="text-xs text-red-600 hover:underline"
                                                 onClick={() => removeFromCompare(bike.id)}
+                                                className="absolute top-1 right-1 text-red-500 hover:text-red-600"
                                             >
-                                                Remove
+                                                x
                                             </button>
+                                            <p className="text-sm font-semibold text-center">{bike.model} </p>
+                                            <p className="text-xs text-muted-foreground text-center">{bike.manufacturer}</p>
+                                            <p className="text-xs text-muted-foreground text-center">{bike.yearRange}</p>
                                         </div>
                                     ))}
-                                    <AddBikePlaceholder classes="w-24" placeholders={placeholders} handleAddClick={handleAddClick} />
+                                    <AddBikePlaceholder
+                                        classes="w-36 h-[4.5rem] flex-shrink-0"
+
+                                        placeholders={placeholders} handleAddClick={handleAddClick} />
                                 </div>
 
 

@@ -14,14 +14,15 @@ interface FiltersPanelProps {
     displacementMax?: number,
     yearMin?: number,
     yearMax?: number,
-    setFilters: (newFilters?: Partial<MotorcycleFilters>) => void
-    setShowPagination: (showPagination: boolean) => void
+    setFilters: (newFilters?: Partial<MotorcycleFilters>) => void,
+    clearTempFilters?: () => void
 }
 
 const FiltersPanel = ({ category, manufacturer, horsePowerMin, horsePowerMax, displacementMin, displacementMax, yearMin, yearMax,
-    setFilters, setShowPagination }: FiltersPanelProps) => {
+    setFilters, clearTempFilters }: FiltersPanelProps) => {
 
     const clearFilters = () => {
+        if (clearTempFilters) clearTempFilters();
         setFilters(undefined);
     };
 
@@ -29,7 +30,7 @@ const FiltersPanel = ({ category, manufacturer, horsePowerMin, horsePowerMax, di
         <div className="rounded-lg shadow-lg p-1 sticky top-6 bg-background">
             <div className="flex flex-row justify-between mb-4 bg-background">
                 <h2 className="text-xl font-bold">Filters</h2>
-                {(manufacturer || category) && (
+                {(manufacturer || category || horsePowerMin || horsePowerMax || displacementMin || displacementMax || yearMin || yearMax) && (
                     <button
                         className="bg-red-500 text-white px-2 rounded"
                         onClick={clearFilters}

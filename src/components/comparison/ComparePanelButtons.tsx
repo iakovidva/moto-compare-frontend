@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { MotorcycleSummary } from "@/models/MotorcycleSummary";
 import { slugify } from "@/lib/utils";
+import { Button } from "../ui/button";
 
 type CompareNowButtonProps = {
     selected: MotorcycleSummary[],
@@ -27,16 +28,9 @@ export const CompareNowButton = ({ selected, setIsOpenMobile }: CompareNowButton
     const isDisabled = selected.length < 2;
 
     return (
-        <button
-            onClick={handleCompareClick}
-            disabled={isDisabled}
-            className={`px-6 py-2 rounded-lg text-sm font-semibold transition ${isDisabled
-                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                : "bg-blue-600 text-white hover:bg-blue-700"
-                }`}
-        >
-            Compare Now ({selected.length})
-        </button>
+        <Button onClick={handleCompareClick} disabled={isDisabled} className="bg-orange-500 hover:bg-orange-600 text-white text-sm px-3 py-1.5 h-auto">
+            Compare Now
+        </Button>
     );
 };
 

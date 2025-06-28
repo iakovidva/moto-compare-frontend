@@ -9,7 +9,6 @@ import FiltersPanel from "./filters/FiltersPanel";
 import { useQuery } from "@tanstack/react-query";
 import { usePagination } from "@/hooks/usePagination";
 import PaginationControls from "./pagination/PaginationControls";
-import { useState } from "react";
 import MobileFilters from "./filters/MobileFilters";
 import MotorcycleSearch from "./MotorcycleSearch";
 import TopControlsBar from "./TopControlsBar";
@@ -22,12 +21,9 @@ interface Props {
 const MotorcyclesSummaryList: React.FC<Props> = ({ motorcycles }) => {
 
     const { search, category, manufacturer, horsePowerMin, horsePowerMax, displacementMin, displacementMax, sort,
-        yearMin, yearMax, setFilters
-    } = useMotorcycleFilters();
+        yearMin, yearMax, setFilters } = useMotorcycleFilters();
 
-    const { page, pageSize, setPage, setPageSize } = usePagination(); // ✅ Separate pagination logic
-    const [showPagination, setShowPagination] = useState<boolean>(true); // insead of that I could make the model to be above everything and block everything in the background.
-
+    const { page, pageSize, setPage, setPageSize } = usePagination();
 
     const { status, error, data } = useQuery({
         queryKey: ["motorcycles", search, page, pageSize, category, manufacturer, horsePowerMin, horsePowerMax, displacementMin, displacementMax, yearMin, yearMax, sort],
@@ -58,7 +54,6 @@ const MotorcyclesSummaryList: React.FC<Props> = ({ motorcycles }) => {
                         yearMin={yearMin}
                         yearMax={yearMax}
                         setFilters={setFilters}
-                        setShowPagination={setShowPagination}
                     />
                 </div>
 
@@ -79,7 +74,6 @@ const MotorcyclesSummaryList: React.FC<Props> = ({ motorcycles }) => {
                             transition={{ duration: 0.3 }}
                         >
                             {motos.map((moto, index) => (
-                                // <MotorcycleCard key={`${moto.id}-${index}`} motorcycle={moto} />
                                 <MotorcycleCard key={`${moto.id}-${index}`} motorcycle={moto} />
                             ))}
                         </motion.div>
@@ -88,27 +82,12 @@ const MotorcyclesSummaryList: React.FC<Props> = ({ motorcycles }) => {
                             page={page}
                             setPage={setPage}
                             totalPages={totalPages}
-                            showPagination={showPagination}
                         />
                     </div>
                 </div>
             </div>
 
-            {/* Mobile Filters Button + Modal */}
-            <MobileFilters>
-                <FiltersPanel
-                    category={category}
-                    manufacturer={manufacturer}
-                    horsePowerMin={horsePowerMin}
-                    horsePowerMax={horsePowerMax}
-                    displacementMin={displacementMin}
-                    displacementMax={displacementMax}
-                    yearMin={yearMin}
-                    yearMax={yearMax}
-                    setFilters={setFilters}
-                    setShowPagination={setShowPagination}
-                />
-            </MobileFilters>
+            <MobileFilters />
         </div>
     );
 };

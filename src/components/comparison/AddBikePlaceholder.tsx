@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 type AddBikePlaceholderProps = {
     placeholders: unknown[],
@@ -9,14 +10,14 @@ export default function AddBikePlaceholder({ placeholders, handleAddClick, class
     return (
         <>
             {placeholders.map((_, index) => (
-                <button
-                    key={`placeholder-${index}`}
-                    onClick={handleAddClick}
-                    className={`${classes} flex flex-col items-center h-[140px] bg-gray-50 border-2 border-dashed border-blue-300 rounded-lg justify-center text-blue-500 hover:bg-blue-50 transition`}
-                >
-                    <span className="text-3xl font-bold">+</span>
-                    <p className="text-xs mt-1 text-gray-500">Add a bike</p>
-                </button>
+                <Link href="/motorcycles" key={`placeholder-${index}`} onClick={handleAddClick}>
+                    <div className={`${classes} bg-muted rounded-lg hover:bg-accent transition-colors flex items-center justify-center`}>
+                        <div className="text-center">
+                            <span className="text-xl">+</span>
+                            <p className="text-muted-foreground text-xs mt-0.5">Add bike</p>
+                        </div>
+                    </div>
+                </Link>
             ))}
         </>
     );

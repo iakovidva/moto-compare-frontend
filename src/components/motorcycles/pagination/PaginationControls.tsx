@@ -2,15 +2,9 @@ interface PaginationControlsProps {
     page: number;
     setPage: (newPage: number) => void;
     totalPages: number;
-    showPagination: boolean
 }
 
-const PaginationControls = (
-    { page, setPage, totalPages, showPagination }: PaginationControlsProps
-) => {
-    if (!showPagination) {
-        return;
-    }
+export default function PaginationControls({ page, setPage, totalPages }: PaginationControlsProps) {
 
     return (
         <div className="flex justify-end items-center mt-8 gap-2">
@@ -43,5 +37,3 @@ const PaginationControls = (
         </div>
     );
 }
-
-export default PaginationControls;
