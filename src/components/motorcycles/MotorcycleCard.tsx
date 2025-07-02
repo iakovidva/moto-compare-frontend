@@ -42,7 +42,7 @@ export default function MotorcycleCard({ motorcycle, actionSlot }: { motorcycle:
                         </div>
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-2 flex flex-wrap justify-end">
                         {actionSlot}
                         <CompareToggleButton bike={motorcycle} />
                     </div>

@@ -101,12 +101,12 @@ export default function FeedbackForm() {
                         : "bg-orange-600 hover:bg-orange-700"
                         }`}
                 >
-                    {loading ? "Submitting..." : "Suggest Motorcycle"}
+                    {loading ? "Submitting..." : "Submit Feedback"}
                 </button>
             </form>
 
             {submitted && (
-                <p className="mt-4 text-green-400 text-center">✅ Thanks! Your suggestion has been received.</p>
+                <p className="mt-4 text-green-400 text-center">✅ Thanks! Your feedback has been received.</p>
             )}
 
             {error && (

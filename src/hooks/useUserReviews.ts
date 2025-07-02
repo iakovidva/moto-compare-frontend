@@ -3,9 +3,10 @@ import { API_BASE_URL } from "@/lib/utils";
 import { useAuthStore } from "@/store/authStore";
 import { useQuery } from "@tanstack/react-query";
 
-type Review = {
+export type Review = {
     userName: string,
     motorcycleId: string,
+    motorcycleName: string,
     rating: number,
     comment: string,
     createdAt: string

@@ -3,7 +3,7 @@ import { API_BASE_URL } from "@/lib/utils";
 import { useAuthStore } from "@/store/authStore";
 import { useQuery } from "@tanstack/react-query";
 
-type UserRequest = {
+export type UserRequest = {
     newMotorcycleRequest: boolean,
     requestContent: string,
     status: string,
