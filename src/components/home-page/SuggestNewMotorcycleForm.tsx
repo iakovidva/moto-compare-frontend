@@ -37,7 +37,6 @@ export default function SuggestNewMotorcycleForm() {
         setError(null);
 
         try {
-            console.log("sending request");
             await addMotorcycleRequest(formData);
             setSubmitted(true);
             setTimeout(() => setSubmitted(false), 2000);

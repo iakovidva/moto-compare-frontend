@@ -8,15 +8,15 @@ enum FeedbackType {
     GeneralFeedback = 'General Feedback'
 }
 
-interface FormData {
+export interface FeedbackRequest {
     type: FeedbackType | '';
     subject: string;
     text: string;
 }
 
 export default function FeedbackForm() {
-    const [formData, setFormData] = useState<FormData>({
-        type: '',
+    const [formData, setFormData] = useState<FeedbackRequest>({
+        type: FeedbackType.GeneralFeedback,
         subject: '',
         text: ''
     });
@@ -35,7 +35,6 @@ export default function FeedbackForm() {
         setError(null);
 
         try {
-            console.log("sending request");
             await submitFeedbackRequest(formData);
             setSubmitted(true);
             setTimeout(() => setSubmitted(false), 2000);
@@ -63,6 +62,7 @@ export default function FeedbackForm() {
                     name="type"
                     value={formData.type}
                     onChange={handleChange}
+                    required
                     className="w-full p-3 rounded-md bg-muted text-foreground border border-gray-700 focus:ring-2 focus:ring-orange-500"
                 >
                     <option value="" disabled>

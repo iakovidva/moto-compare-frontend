@@ -69,7 +69,7 @@ export default async function MotorcyclePage({ params }: Props) {
                         </div>
 
                         {/* Quick Actions : MOBILE ONLY */}
-                        <div className="lg:hidden bg-card rounded-lg shadow-lg p-4 mb-6">
+                        <div className="lg:hidden rounded-lg shadow-lg p-4 mb-6">
                             <h3 className="text-lg font-bold text-foreground mb-4">Quick Actions</h3>
                             <div className="space-y-3 md:space-y-4 mb-4 md:mb-6">
                                 <CompareToggleButton bike={motorcycle} />
@@ -84,7 +84,7 @@ export default async function MotorcyclePage({ params }: Props) {
                             <ReportIncorrectSpec bike={motorcycle} />
                         </div>
 
-                        <div className="mb-6 md:mb-8">
+                        <div className="lg:hidden rounded-lg shadow-lg mb-6">
                             <SimilarBikes similarBikes={similarBikes} />
                         </div>
 
@@ -93,7 +93,7 @@ export default async function MotorcyclePage({ params }: Props) {
 
                     {/* Right Column - Actions & Quick Specs - Desktop Only */}
                     <div className="lg:col-spa  n-1 hidden lg:block">
-                        <div className="bg-card rounded-lg shadow-lg p-4 md:p-6 sticky top-6">
+                        <div className="bg-card rounded-lg shadow-lg p-4 md:p-6 ">
                             <h3 className="text-lg md:text-xl font-bold text-foreground mb-4 md:mb-6">Quick Actions</h3>
 
                             <div className="space-y-3 md:space-y-4 mb-4 md:mb-6">
@@ -126,6 +126,10 @@ export default async function MotorcyclePage({ params }: Props) {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <div className="my-6 md:mb-8">
+                            <SimilarBikes similarBikes={similarBikes} />
                         </div>
                     </div>
                 </div>

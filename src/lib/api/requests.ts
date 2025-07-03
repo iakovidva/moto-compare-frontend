@@ -3,6 +3,7 @@ import { IncorrectSpecReportModel } from "@/models/IncorrectSpecRequestModel";
 import { UserRequestModel } from "@/models/UserRequestModel";
 import { fetchWithAuth } from "./fetchWithAuth";
 import { API_BASE_URL } from "../utils";
+import { FeedbackRequest } from "@/app/submit/FeedbackForm";
 
 export async function fetchOpenRequests() {
     try {
@@ -68,7 +69,7 @@ export async function reportIncorrectSpec(data: IncorrectSpecReportModel) {
     }
 }
 
-export async function submitFeedbackRequest(data: any) {
+export async function submitFeedbackRequest(data: FeedbackRequest) {
     try {
         const response = await fetchWithAuth(`${API_BASE_URL}/motorcycles/feedback`, {
             method: "POST",

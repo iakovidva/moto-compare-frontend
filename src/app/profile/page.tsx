@@ -1,18 +1,23 @@
-import AccountActions from "@/components/profile/AccountActions";
-import FavoritesPreview from "@/components/profile/FavoritesPreview";
-import UserInfoCard from "@/components/profile/UserInfoCard";
-import UserRequests from "@/components/profile/UserRequests";
-import UserReviews from "@/components/profile/UserReviews";
+"use client"
 
-export default async function ProfilePage() {
+import AccountActions from "@/components/profile/AccountActions";
+import ProfileTabs from "@/components/profile/ProfileTabs";
+import UserInfoCard from "@/components/profile/UserInfoCard";
+import { useFavoriteMotorcycles } from "@/hooks/useFavoriteMotorcycles";
+import { useUserRequests } from "@/hooks/useUserRequests";
+import { useUserReviews } from "@/hooks/useUserReviews";
+
+export default function ProfilePage() {
+
+    const { data: userRequests = [], isLoading, error } = useUserRequests();
+    const { data: userFavorites = [] } = useFavoriteMotorcycles();
+    const { data: userReviews = [] } = useUserReviews();
 
     return (
-        <div className="max-w-4xl mx-auto mt-8 space-y-6 px-4">
-            <h1 className="text-3xl font-bold text-center">Your Profile</h1>
-            <UserInfoCard />
-            <UserRequests />
-            <FavoritesPreview />
-            <UserReviews />
+        <div className="min-h-screen max-w-7xl mx-auto mt-8 space-y-6 px-4">
+            <h1 className="text-3xl font-bold text-center">My Profile</h1>
+            <UserInfoCard contributions={{ reviews: userReviews.length, requests: userRequests.length, favorites: userFavorites.length }} />
+            <ProfileTabs userRequests={userRequests} favorites={userFavorites} reviews={userReviews} />
             <AccountActions />
         </div>
     );
