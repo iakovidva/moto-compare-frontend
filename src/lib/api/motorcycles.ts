@@ -1,11 +1,12 @@
 import { CategoryEnum, ManufacturerEnum } from "@/constants/enums";
 import { groupedSpecsSchema, motorcycleSchema } from "@/constants/motorcycleSchema";
 import { MotorcycleDetailsModel } from "@/models/MotorcycleDetailsModel";
-import { MotorcycleSummary } from "@/models/MotorcycleSummary";
+import { MotorcycleSummary, RankedMotorcycleSummary } from "@/models/MotorcycleSummary";
 import { PopularManufacturer } from "@/models/PopularManufacturer";
 import { z } from "zod";
 import { fetchWithAuth } from "./fetchWithAuth";
 import { API_BASE_URL } from "../utils";
+import { QuizAnswers } from "../quizQuestions";
 
 
 type FetchProps = {
@@ -77,33 +78,6 @@ export async function fetchAllMotorcyclesSummary({
         motorcycles: [],
         totalPages: 0
     }
-    }
-}
-
-export async function fetchPopularManufacturers() {
-    try {
-        const response = await fetch(`${API_BASE_URL}/motorcycles/popular-manufacturers`, {
-            method: "GET",
-            headers: {
-                "Content-Type" : "application/json"
-            },
-            next: {revalidate: 60}
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to fetch');
-        }
-        const data = await response.json();
-        const mapped: PopularManufacturer[] = data.map( (item:any) => ({
-            name: item.manufacturer,
-            count: item.count,
-            logo: `/images/manufacturers/${item.manufacturer.toLowerCase()}-logo.png`
-        }))
-        return mapped;
-
-    } catch (error) {
-        console.error("Error fetching popular manufacturers", error);
-        return null;
     }
 }
 
@@ -200,4 +174,27 @@ function flattenSpecs(groupedSpecs: z.infer<typeof groupedSpecsSchema>): Flatten
     }
     
     return flattened;
+}
+
+
+export async function fetchQuizResultMotorcycles(answers: Partial<QuizAnswers>) : Promise<RankedMotorcycleSummary[] | null> {
+    try {
+        const response = await fetch(`${API_BASE_URL}/motorcycles/quiz`, {
+            method: "POST",
+            body: JSON.stringify(answers),
+            headers: {
+                "Content-Type" : "application/json"
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch');
+        }
+        const data : RankedMotorcycleSummary[] = await response.json();
+        return data;
+
+    } catch (error) {
+        console.error("Error fetching motorcycle", error);
+        return null;
+    }
 }
