@@ -121,7 +121,7 @@ export default function NewReviewsSection({ motorcycleId }: { motorcycleId: stri
                         </div>
                         <Button
                             onClick={handleSubmit}
-                            className="bg-orange-500 hover:bg-orange-600 text-sm md:text-base"
+                            className="bg-orange-500 hover:bg-orange-600 text-sm md:text-base text-white"
                         >
                             Submit Review
                         </Button>

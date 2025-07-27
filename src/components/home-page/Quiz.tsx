@@ -7,7 +7,7 @@ export default function Quiz() {
             <div className="container mx-auto px-4">
                 <div className="max-w-4xl mx-auto text-center">
                     <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <span className="text-foreground text-3xl">?</span>
+                        <span className="text-white text-3xl">?</span>
                     </div>
                     <h2 className="text-2xl md:text-4xl font-bold mb-4 md:mb-6 text-foreground">
                         Not Sure Which Bike is Right for You?

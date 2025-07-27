@@ -30,10 +30,9 @@ const HeroSection: React.FC = () => {
                         <Link href="/compare">
                             <Button
                                 size="lg"
-                                className="bg-orange-500 hover:bg-orange-600 text-foreground px-12 py-6 text-xl font-semibold rounded-lg transition-all duration-300 hover:scale-105"
+                                className="bg-orange-500 hover:bg-orange-600 text-white px-12 py-6 text-xl font-semibold rounded-lg transition-all duration-300 hover:scale-105"
                             >
                                 Start Comparing <span className="ml-3 h-6 w-6">→</span>
-                                {/* <ArrowRight className="ml-3 h-6 w-6" /> */}
                             </Button>
                         </Link>
                         <Link href="/motorcycles">

@@ -29,7 +29,7 @@ export default function CompareToggleButton({ bike, compact = false }: Props) {
                 : 'bg-orange-500 hover:bg-orange-600 text-white'
                 }${compact ? "text-xs h-7" : "text-base px-3 py-2"}`}
         >
-            {isSelected ? "✕ Remove" : "+ Compare"}
+            <span className="text-white">{isSelected ? "✕ Remove" : "+ Compare"}</span>
         </Button>
     );
 }

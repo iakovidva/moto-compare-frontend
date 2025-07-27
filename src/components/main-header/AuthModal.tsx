@@ -154,7 +154,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login', mess
 
                     <Button
                         type="submit"
-                        className="w-full bg-orange-500 hover:bg-orange-600"
+                        className="w-full bg-orange-500 hover:bg-orange-600 text-white"
                         disabled={isSubmitting}
                     >
                         {isSubmitting ? 'Please wait...' : mode === 'login' ? 'Sign In' : 'Create Account'}

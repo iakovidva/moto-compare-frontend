@@ -77,7 +77,7 @@ export default function CompareMotorcycles() {
                 </p>
 
                 <Link href="/motorcycles">
-                    <Button className="bg-orange-500 hover:bg-orange-600 mb-6 md:mb-8 text-sm md:text-base">
+                    <Button className="bg-orange-500 hover:bg-orange-600 mb-6 md:mb-8 text-sm md:text-base text-white">
                         Browse Motorcycles
                     </Button>
                 </Link>

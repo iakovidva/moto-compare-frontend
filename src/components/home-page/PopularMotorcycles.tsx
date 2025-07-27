@@ -4,6 +4,7 @@ import { MotorcycleSummary } from "@/models/MotorcycleSummary";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import CompareToggleButton from "../comparison/CompareToggleButton";
 
 const pickRandomItems = <T extends unknown>(arr: T[], n: number): T[] => {
     const shuffled = Array.from(arr).sort(() => 0.5 - Math.random());
@@ -79,9 +80,7 @@ export default async function PopularMotorcycles() {
                                     </div>
                                 </div>
 
-                                <Button className="w-full bg-orange-500 hover:bg-orange-600 text-xs md:text-sm py-1.5 md:py-2">
-                                    + Compare
-                                </Button>
+                                <CompareToggleButton bike={motorcycle} />
                             </div>
                         </div>
                     ))}

@@ -28,7 +28,7 @@ export default function FavoriteMotorcycles() {
                     Start browsing motorcycles and add them to your favorites to keep track of bikes you love!
                 </p>
                 <Link href={"/motorcycles"}>
-                    <Button className="bg-orange-500 hover:bg-orange-600">
+                    <Button className="bg-orange-500 hover:bg-orange-600 text-white">
                         Browse Motorcycles
                     </Button>
                 </Link>

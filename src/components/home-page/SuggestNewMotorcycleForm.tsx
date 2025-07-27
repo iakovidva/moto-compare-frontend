@@ -101,7 +101,7 @@ export default function SuggestNewMotorcycleForm() {
                 <button
                     type="submit"
                     disabled={loading}
-                    className={`w-full py-3 rounded-md font-semibold text-foreground transition ${loading
+                    className={`w-full py-3 rounded-md font-semibold text-white transition ${loading
                         ? "bg-orange-400 cursor-not-allowed"
                         : "bg-orange-600 hover:bg-orange-700"
                         }`}
