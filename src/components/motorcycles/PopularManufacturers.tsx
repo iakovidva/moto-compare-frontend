@@ -1,4 +1,4 @@
-import { fetchPopularManufacturers } from "@/lib/api/motorcycles";
+import { fetchPopularManufacturers } from "@/lib/api/statistics";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 
