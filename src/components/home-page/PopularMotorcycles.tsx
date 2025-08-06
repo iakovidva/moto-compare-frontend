@@ -1,18 +1,11 @@
-
-import { fetchAllMotorcyclesSummary } from "@/lib/api/motorcycles";
 import { MotorcycleSummary } from "@/models/MotorcycleSummary";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "../ui/button";
 import CompareToggleButton from "../comparison/CompareToggleButton";
-
-const pickRandomItems = <T extends unknown>(arr: T[], n: number): T[] => {
-    const shuffled = Array.from(arr).sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, n);
-};
+import { fetchPopularMotorcycles } from "@/lib/api/statistics";
 
 export default async function PopularMotorcycles() {
-    const { motorcycles } = await fetchAllMotorcyclesSummary({});
+    const motorcycles: MotorcycleSummary[] | null = await fetchPopularMotorcycles();
     return (
         <section className="py-8 md:py-16 bg-background">
             <div className="container mx-auto px-4">
@@ -26,7 +19,7 @@ export default async function PopularMotorcycles() {
                 </div>
 
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
-                    {pickRandomItems(motorcycles, 4).map((motorcycle) => (
+                    {motorcycles!.map((motorcycle) => (
                         <div key={motorcycle.id} className="bg-card border border-border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
                             <Link
                                 href={`/motorcycles/${motorcycle.id}`}>

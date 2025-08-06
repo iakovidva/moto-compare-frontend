@@ -1,5 +1,6 @@
 import { PopularManufacturer } from "@/models/PopularManufacturer";
 import { API_BASE_URL } from "../utils";
+import { MotorcycleSummary } from "@/models/MotorcycleSummary";
 
 export interface CategoryStatsModel {
     category: string;
@@ -55,6 +56,28 @@ export async function fetchPopularManufacturers() {
 
     } catch (error) {
         console.error("Error fetching popular manufacturers", error);
+        return null;
+    }
+}
+
+export async function fetchPopularMotorcycles() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/statistics/popular`, {
+            method: "GET",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            next: {revalidate: 60}
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch');
+        }
+        const data: MotorcycleSummary[] = await response.json();
+        return data;
+
+    } catch (error) {
+        console.error("Error fetching popular motorcycles", error);
         return null;
     }
 }
