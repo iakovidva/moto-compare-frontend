@@ -6,6 +6,7 @@ import { fetchPopularMotorcycles } from "@/lib/api/statistics";
 
 export default async function PopularMotorcycles() {
     const motorcycles: MotorcycleSummary[] | null = await fetchPopularMotorcycles();
+    
     return (
         <section className="py-8 md:py-16 bg-background">
             <div className="container mx-auto px-4">
@@ -18,8 +19,31 @@ export default async function PopularMotorcycles() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
-                    {motorcycles!.map((motorcycle) => (
+                {!motorcycles ? (
+                    <div className="text-center py-12">
+                        <div className="bg-muted/50 rounded-lg p-8">
+                            <h3 className="text-xl font-semibold mb-2 text-foreground">
+                                No Motorcycles Available
+                            </h3>
+                            <p className="text-muted-foreground">
+                                Unable to load popular motorcycles. Please check back later or ensure the backend service is running.
+                            </p>
+                        </div>
+                    </div>
+                ) : motorcycles.length === 0 ? (
+                    <div className="text-center py-12">
+                        <div className="bg-muted/50 rounded-lg p-8">
+                            <h3 className="text-xl font-semibold mb-2 text-foreground">
+                                No Popular Motorcycles Yet
+                            </h3>
+                            <p className="text-muted-foreground">
+                                Check back later as more motorcycles are added to the catalog.
+                            </p>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+                        {motorcycles.map((motorcycle) => (
                         <div key={motorcycle.id} className="bg-card border border-border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
                             <Link
                                 href={`/motorcycles/${motorcycle.id}`}>
@@ -77,7 +101,8 @@ export default async function PopularMotorcycles() {
                             </div>
                         </div>
                     ))}
-                </div>
+                    </div>
+                )}
             </div>
         </section>
     );

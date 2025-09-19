@@ -10,10 +10,15 @@ export default async function MotorcyclesPage() {
 
     const queryClient = new QueryClient();
 
-    await queryClient.prefetchQuery({
-        queryKey: ["popularManufacturers"],
-        queryFn: fetchPopularManufacturers,
-    });
+    try {
+        await queryClient.prefetchQuery({
+            queryKey: ["popularManufacturers"],
+            queryFn: fetchPopularManufacturers,
+        });
+    } catch (error) {
+        console.error("Failed to prefetch popular manufacturers:", error);
+        // Continue without prefetched data - the component will handle the error
+    }
 
     const dehydratedState = dehydrate(queryClient);
 
