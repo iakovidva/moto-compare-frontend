@@ -4,22 +4,12 @@ RECOMMENDED MOTORCYCLES
 
 -- QUIZ 
 
-
-ONE REVIEW PER USER PER MOTORCYCLE
-
-
 1:
 WHEN I ADD A SEARCH TERM IN THE MOTORCYCLE EXPLORE PAGE, THE RESULT I GET DOESNT INCLUDE THE OTHER FILTERS, BUT THE URL KEEPS ALL THE FILTERS INSIDE.
 e.g. http://localhost:3000/motorcycles?horsePowerMin=65&displacementMax=750&search=honda;\
 
-2:
-ONE REVIEW PER USER AND MOTORCYCLE. IF USER ALREADY REVIEWED ONE, SHOULD BE ABLE TO EDIT HIS REVIEW, BUT NOT CREATE ANOTHER ONE!
-
 3:
 Paginate user reviews, if a moto has 500 reviews I don't want to show a huge list. (LATER...)
-
-4:
-export default withAuth(RequestsPage, { requiredRole: "ADMIN" }); //TODO WHEN REFRESH BREAKS!!!
 
 5:
 change password user functionality (READY IN BACKEND)

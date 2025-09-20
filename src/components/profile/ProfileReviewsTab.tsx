@@ -33,12 +33,14 @@ export default function ProfileReviewsTab({ reviews }: { reviews: Review[] }) {
             <div className="space-y-4">
                 {reviews.map((review) => (
                     <div key={review.createdAt} className="border border-border rounded-lg p-4">
-                        <div className="flex items-center justify-between mb-2">
-                            <h4 className="font-semibold text-foreground">{review.motorcycleName}</h4>
-                            <span className="text-muted-foreground text-sm">
-                                {new Date(review.createdAt).toLocaleString()}
-                            </span>
-                        </div>
+                        <Link href={`/motorcycles/${review.motorcycleId}`}>
+                            <div className="flex items-center justify-between mb-2">
+                                <h4 className="font-semibold text-foreground">{review.motorcycleName}</h4>
+                                <span className="text-muted-foreground text-sm">
+                                    {new Date(review.createdAt).toLocaleString()}
+                                </span>
+                            </div>
+                        </Link>
                         <div className="flex items-center mb-2">
                             <span className="text-yellow-400 text-xl">
                                 {"★".repeat(Math.round(review.rating))}

@@ -2,8 +2,13 @@ import { getCategoryStats } from "@/lib/api/statistics";
 import Link from "next/link";
 
 export default async function CategorySelection() {
-
-    const categories = await getCategoryStats();
+    let categories;
+    try {
+        categories = await getCategoryStats();
+    } catch (error) {
+        console.error("Failed to fetch category stats:", error);
+        categories = null;
+    }
 
     return (
         <section className="py-8 md:py-16 bg-muted">
@@ -17,8 +22,31 @@ export default async function CategorySelection() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
-                    {categories.map((category) => (
+                {!categories ? (
+                    <div className="text-center py-12">
+                        <div className="bg-background/50 rounded-lg p-8">
+                            <h3 className="text-xl font-semibold mb-2 text-foreground">
+                                Categories Unavailable
+                            </h3>
+                            <p className="text-muted-foreground">
+                                Unable to load categories. Please check back later.
+                            </p>
+                        </div>
+                    </div>
+                ) : categories.length === 0 ? (
+                    <div className="text-center py-12">
+                        <div className="bg-background/50 rounded-lg p-8">
+                            <h3 className="text-xl font-semibold mb-2 text-foreground">
+                                No Categories Available
+                            </h3>
+                            <p className="text-muted-foreground">
+                                Categories will appear here once motorcycles are added.
+                            </p>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
+                        {categories.map((category) => (
                         <Link
                             key={category.category}
                             href={`/motorcycles?category=${category.category.toUpperCase()}`}
@@ -40,7 +68,8 @@ export default async function CategorySelection() {
                             </div>
                         </Link>
                     ))}
-                </div>
+                    </div>
+                )}
             </div>
         </section>
     );

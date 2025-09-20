@@ -24,7 +24,7 @@ export async function login(email: string, password: string) {
         const data = await response.json();
         const jwtPayload: JwtPayload = parseJwt(data.accessToken);
 
-        setAuth(data.accessToken, jwtPayload.sub, jwtPayload.role);
+        setAuth(data.accessToken, email, jwtPayload.role);
     } catch (err: any) {
         throw new Error("Invalid email or password");
     }
@@ -89,5 +89,38 @@ export async function registerUser(username: string, email: string, password: st
     } catch (err: any) {
         console.log("error message: " + err.message);
         throw err;
+    }
+}
+
+export async function googleLogin(idToken: string) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/auth/google`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+            body: JSON.stringify({ idToken })
+        });
+
+        if (!response.ok) {
+            let errorMessage = "Google sign-in failed";
+            try {
+                const errorData = await response.json();
+                errorMessage = errorData.message || errorMessage;
+            } catch (e) {
+                const text = await response.text();
+                if (text) errorMessage = text;
+            }
+            throw new Error(errorMessage);
+        }
+
+        const data = await response.json();
+        const jwtPayload: JwtPayload = parseJwt(data.accessToken);
+
+        setAuth(data.accessToken, jwtPayload.sub, jwtPayload.role);
+    } catch (err: any) {
+        console.log("Google auth error: " + err.message);
+        throw new Error(err.message || "Google sign-in failed");
     }
 }

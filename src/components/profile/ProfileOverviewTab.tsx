@@ -121,7 +121,9 @@ const LatestReviews = ({ reviews, setActiveTab }: { reviews: Review[], setActive
                     >
                         <div className="flex justify-between items-start">
                             <div>
-                                <h4 className="font-medium text-foreground">{review.motorcycleName}</h4>
+                                <Link href={`/motorcycles/${review.motorcycleId}`}>
+                                    <h4 className="font-medium text-foreground">{review.motorcycleName}</h4>
+                                </Link>
                                 <p className="text-xs text-muted-foreground mt-1">By {review.userName}</p>
                             </div>
                             <span className="text-sm font-medium text-yellow-600">

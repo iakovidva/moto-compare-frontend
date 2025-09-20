@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 
@@ -13,19 +13,42 @@ export function withAuth<T extends {}>(
     return function ProtectedRoute(props: T) {
         const { accessToken, role } = useAuthStore();
         const router = useRouter();
-
-        const isAuthorized =
-            accessToken &&
-            (!options?.requiredRole || role === options.requiredRole);
+        const wasAuthenticated = useRef(!!accessToken);
+        
+        const isAuthenticated = !!accessToken;
+        const hasRequiredRole = !options?.requiredRole || role === options.requiredRole;
+        const isAuthorized = isAuthenticated && hasRequiredRole;
 
         useEffect(() => {
-            if (!isAuthorized) {
-                router.replace("/403");
+            if (wasAuthenticated.current && !isAuthenticated) {
+                router.replace("/");
+                return;
             }
-        }, [isAuthorized]);
+            wasAuthenticated.current = isAuthenticated;
+        }, [isAuthenticated, router]);
+
+        if (!isAuthenticated) {
+            router.replace("/not-found");
+            return (
+                <div className="min-h-screen flex items-center justify-center">
+                    <div className="text-center space-y-2">
+                        <div className="w-8 h-8 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                        <p className="text-muted-foreground">Redirecting...</p>
+                    </div>
+                </div>
+            );
+        }
 
         if (!isAuthorized) {
-            return null; // Or a loading spinner while redirecting
+            router.replace("/not-found");
+            return (
+                <div className="min-h-screen flex items-center justify-center">
+                    <div className="text-center space-y-2">
+                        <div className="w-8 h-8 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                        <p className="text-muted-foreground">Redirecting...</p>
+                    </div>
+                </div>
+            );
         }
 
         return <Component {...props} />;

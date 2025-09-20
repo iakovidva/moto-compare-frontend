@@ -1,4 +1,6 @@
 
+"use client"
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useCompareStore } from '@/store/compareStore';
@@ -26,12 +28,17 @@ const PopularComparisons = () => {
     const { selected, addToCompare } = useCompareStore();
 
     async function handlePopularComparison(comparison: typeof popularComparisons[0]) {
-        // Add mock motorcycles for demonstration
-        const mockMotorcycles = [await fetchMotorcycleSummary("1"), await fetchMotorcycleSummary("2")];
+        try {
+            // Add mock motorcycles for demonstration
+            const mockMotorcycles = [await fetchMotorcycleSummary("1"), await fetchMotorcycleSummary("2")];
 
-        mockMotorcycles.forEach(bike => {
-            if (bike) addToCompare(bike);
-        });
+            mockMotorcycles.forEach(bike => {
+                if (bike) addToCompare(bike);
+            });
+        } catch (error) {
+            console.error("Failed to fetch motorcycles for comparison:", error);
+            // Handle the error gracefully - could show a toast or error message
+        }
     };
 
     return (
