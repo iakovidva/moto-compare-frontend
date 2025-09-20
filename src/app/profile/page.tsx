@@ -3,11 +3,12 @@
 import AccountActions from "@/components/profile/AccountActions";
 import ProfileTabs from "@/components/profile/ProfileTabs";
 import UserInfoCard from "@/components/profile/UserInfoCard";
+import { withAuth } from "@/components/withAuth";
 import { useFavoriteMotorcycles } from "@/hooks/useFavoriteMotorcycles";
 import { useUserRequests } from "@/hooks/useUserRequests";
 import { useUserReviews } from "@/hooks/useUserReviews";
 
-export default function ProfilePage() {
+function ProfilePage() {
 
     const { data: userRequests = [], isLoading, error } = useUserRequests();
     const { data: userFavorites = [] } = useFavoriteMotorcycles();
@@ -23,4 +24,4 @@ export default function ProfilePage() {
     );
 }
 
-// export default withAuth(ProfilePage, { requiredRole: "USER" }); TODO protect page.
+export default withAuth(ProfilePage);
