@@ -1,3 +1,4 @@
+.env.local  NEXT_PUBLIC_GOOGLE_CLIENT_ID=625528735337-gvrmackf682blkmakqp73kjknumnvli5.apps.googleusercontent.com
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
