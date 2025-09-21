@@ -129,7 +129,9 @@ const InputSpec = ({ category, fields, register, errors }: InputSpecProps) => (
                             ) : (
                                 <input className="mt-1 w-full border rounded px-2 py-1 bg-gray-100"
                                     {...register(`groupedSpecs.${category}.${key}`)}
-                                    type={type === "boolean" ? "checkbox" : type} />
+                                    type={type === "boolean" ? "checkbox" : type}
+                                    {...(type === 'number' ? { step: 'any', inputMode: 'decimal' } : {})}
+                                />
                             )}
                             {errors?.[key] && <p className="text-red-500">{errors[key].message}</p>}
                         </div>

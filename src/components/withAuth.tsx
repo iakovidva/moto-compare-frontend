@@ -12,6 +12,7 @@ export function withAuth<T extends {}>(
 ) {
     return function ProtectedRoute(props: T) {
         const { accessToken, role } = useAuthStore();
+        const { initialized } = useAuthStore();
         const router = useRouter();
         const wasAuthenticated = useRef(!!accessToken);
         
@@ -26,6 +27,18 @@ export function withAuth<T extends {}>(
             }
             wasAuthenticated.current = isAuthenticated;
         }, [isAuthenticated, router]);
+
+        // If auth state isn't initialized yet, show a neutral loading state
+        if (!initialized) {
+            return (
+                <div className="min-h-screen flex items-center justify-center">
+                    <div className="text-center space-y-2">
+                        <div className="w-8 h-8 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                        <p className="text-muted-foreground">Loading...</p>
+                    </div>
+                </div>
+            );
+        }
 
         if (!isAuthenticated) {
             router.replace("/not-found");

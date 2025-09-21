@@ -18,6 +18,8 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
                     setAuth(newToken, sub, role);
                 }
             }
+            // Mark initialized regardless of whether we recovered a token
+            useAuthStore.setState({ initialized: true } as any);
         };
         tryRehydrate();
     }, [accessToken, setAuth]);
