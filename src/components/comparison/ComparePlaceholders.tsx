@@ -4,6 +4,7 @@ import { useCompareStore } from '@/store/compareStore';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import FavoriteToggleButton from '../motorcycle/FavoriteToggleButton';
 
 interface ComparePlaceholdersProps {
     motorcycles: MotorcycleDetailsModel[];
@@ -42,9 +43,10 @@ const ComparePlaceholders = ({ motorcycles }: ComparePlaceholdersProps) => {
                                 <h3 className="font-bold text-sm text-foreground">
                                     {motorcycle.model}
                                 </h3>
-                                <p className="text-xs text-muted-foreground">
+                                <p className="text-xs text-muted-foreground mb-3">
                                     {motorcycle.manufacturer}
                                 </p>
+                                <FavoriteToggleButton bike={motorcycle} compact />
                             </div>
                         </>
                     ) : (

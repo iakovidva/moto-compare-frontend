@@ -1,4 +1,5 @@
 import { getCategoryStats } from "@/lib/api/statistics";
+import { formatCategory } from "@/lib/utils";
 import Link from "next/link";
 
 export default async function CategorySelection() {
@@ -56,13 +57,13 @@ export default async function CategorySelection() {
                                 <div className={`h-32 md:h-48 relative overflow-hidden`}>
                                     <div className="absolute inset-0 bg-black bg-opacity-20"></div>
                                     <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 text-white">
-                                        <h3 className="text-lg md:text-2xl font-bold">{category.category}</h3>
+                                        <h3 className="text-lg md:text-2xl font-bold">{formatCategory(category.category)}</h3>
                                         <p className="text-white text-opacity-90 text-sm md:text-base">{category.counter}</p>
                                     </div>
                                 </div>
                                 <div className="p-3 md:p-6">
                                     <p className="text-sm md:text-base text-muted-foreground">
-                                        Explore {category.category.toLowerCase()} motorcycles
+                                        Explore {formatCategory(category.category)} motorcycles
                                     </p>
                                 </div>
                             </div>

@@ -44,3 +44,26 @@ export const validatePassword = (pass: string) => {
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+const categoryLabels: Record<string, string> = {
+  ADVENTURE: "Adventure",
+  NAKED: "Naked",
+  SUPERSPORT: "Supersport",
+  CRUISER: "Cruiser",
+  TOURING: "Touring",
+  DUAL_SPORT: "Dual Sport",
+  SCOOTER: "Scooter",
+  UNDERBONE: "Underbone",
+  ENDURO: "Enduro",
+  CAFE_RACER: "Café Racer",
+  SCRAMBLER: "Scrambler",
+  SPORT_TOURING: "Sport Touring",
+  MOTOCROSS: "Motocross",
+  ELECTRIC: "Electric",
+  CUSTOM: "Custom",
+  SIDECAR: "Sidecar",
+};
+
+export function formatCategory(category: string): string {
+  return categoryLabels[category] ?? category;
+}
